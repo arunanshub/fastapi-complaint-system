@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "fastapi-complaint-system"
+version = "0.1.0"
+description = ""
+authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
+readme = "README.md"
+packages = [{include = "app", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.90.0"
+sqlmodel = "^0.0.8"
+alembic = "^1.9.3"
+aiosqlite = "^0.18.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# Extra tools for development
+[tool.pycln]
+all = true
+
+[tool.black]
+line-length = 79
+target-verson = "py38"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+line_length = 79
+profile = "black"
+add_imports = ["from __future__ import annotations"]
