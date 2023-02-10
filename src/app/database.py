@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import typing
 
-from decouple import config
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
+
+from .core.settings import settings
 
 
 def _remove_drivername_from_url(url: str) -> str:
@@ -13,11 +14,13 @@ def _remove_drivername_from_url(url: str) -> str:
     return str(db_url.set(drivername=db_url.get_backend_name()))
 
 
-DATABASE_URL = typing.cast("str", config("DATABASE_URL", cast=str))
+DATABASE_URL = settings.DATABASE_URL
 
-DATABASE_URL_WITHOUT_DRIVER = _remove_drivername_from_url(DATABASE_URL)
+DATABASE_URL_WITHOUT_DRIVER = _remove_drivername_from_url(
+    settings.DATABASE_URL
+)
 
-engine = create_async_engine(DATABASE_URL)
+engine = create_async_engine(settings.DATABASE_URL)
 
 
 async def get_db() -> typing.AsyncIterable[AsyncSession]:
