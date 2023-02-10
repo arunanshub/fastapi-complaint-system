@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, Field
 
 
 class Settings(BaseSettings):
-    SECRET_KEY: str = ""
-    DATABASE_URL: str = ""
+    SECRET_KEY: str = Field(default=...)
+    DATABASE_URL: str = Field(default=...)
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     class Config:
