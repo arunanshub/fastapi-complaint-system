@@ -9,6 +9,7 @@ from sqlalchemy.engine import make_url
 class Settings(BaseSettings):
     SECRET_KEY: str = Field(default=...)
     DATABASE_URL: str = Field(default=...)
+    #: This URL is derived from ``DATABASE_URL`` and not from the environment.
     DATABASE_URL_WITHOUT_DRIVER: str = Field(default=None)
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
