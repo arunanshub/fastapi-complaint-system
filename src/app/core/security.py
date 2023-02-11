@@ -56,12 +56,12 @@ def verify_access_token(access_token: str) -> token.TokenPayload:
             access_token, settings.SECRET_KEY, algorithms=[ALGORITHM]
         )
         token_data = token.TokenPayload(**payload)
-    except (jwt.InvalidTokenError, ValidationError):
+    except (jwt.InvalidTokenError, ValidationError) as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
-        )
+        ) from e
     return token_data
 
 
