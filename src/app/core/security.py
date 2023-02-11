@@ -60,6 +60,7 @@ def verify_access_token(access_token: str) -> token.TokenPayload:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
         )
     return token_data
 
