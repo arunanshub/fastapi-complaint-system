@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-import typing
-
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-
-if typing.TYPE_CHECKING:
-    from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
 from ..core import security
 from ..core.settings import settings
