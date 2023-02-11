@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     #: This URL is derived from ``DATABASE_URL`` and not from the environment.
     DATABASE_URL_WITHOUT_DRIVER: str = Field(default=None)
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    API_VERSION_URL: str = "/api/v1"
 
     @validator("DATABASE_URL_WITHOUT_DRIVER", pre=True)
     def get_database_name_without_driver(
