@@ -54,6 +54,8 @@ extend-ignore = [
     "ANN401",
     # Abstract base class with no abstract method.
     "B024",
+    # Function call in argument defaults: fastapi.Depends
+    "B008",
 ]
 # Use `future ... __annotations__` style type checking
 enable-extensions = ["TC", "TC1"]
