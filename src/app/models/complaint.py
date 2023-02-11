@@ -3,14 +3,14 @@
 from datetime import datetime  # noqa: TC003
 
 from pydantic import HttpUrl  # noqa: TC002
-from sqlmodel import Field, SQLModel, Text, func
+from sqlmodel import Column, Field, SQLModel, Text, func
 
 from .enums import ComplaintStatus
 
 
 class ComplaintBase(SQLModel):
     title: str = Field(max_length=120)
-    description: str = Field(sa_column=Text)  # type: ignore
+    description: str = Field(sa_column=Column(Text(), nullable=False))
     photo_url: HttpUrl
     amount: float
     created_at: datetime = Field(
