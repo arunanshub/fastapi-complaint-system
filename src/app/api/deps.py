@@ -4,8 +4,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
-from ..core import security
-from ..core.settings import settings
+from ..core import security, settings
 from ..database import get_db
 from ..models.user import User
 
