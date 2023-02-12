@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from datetime import datetime, timedelta
 
 import jwt
@@ -17,7 +18,7 @@ ALGORITHM = "HS256"
 
 
 def create_access_token(
-    subject: str,
+    subject: typing.Any,
     expires_delta: timedelta | None = None,
 ) -> str:
     """Create an access token using the subject and expiry time-delta.
@@ -55,14 +56,13 @@ def verify_access_token(access_token: str) -> token.TokenPayload:
         payload = jwt.decode(
             access_token, settings.SECRET_KEY, algorithms=[ALGORITHM]
         )
-        token_data = token.TokenPayload(**payload)
+        return token.TokenPayload(**payload)
     except (jwt.InvalidTokenError, ValidationError) as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         ) from e
-    return token_data
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
