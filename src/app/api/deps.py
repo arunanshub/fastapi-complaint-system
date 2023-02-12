@@ -30,7 +30,15 @@ async def get_current_user(
     Raises:
         HTTPException: Raised if token is invalid or the user is not found.
     """
-    token_data = security.verify_access_token(access_token)
+    try:
+        token_data = security.verify_access_token(access_token)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        ) from e
+
     user = await db.get(User, token_data.sub)
     if user is None:
         raise HTTPException(

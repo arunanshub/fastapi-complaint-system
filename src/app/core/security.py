@@ -4,7 +4,6 @@ import typing
 from datetime import datetime, timedelta
 
 import jwt
-from fastapi import HTTPException, status
 from passlib.context import CryptContext
 from pydantic import ValidationError
 
@@ -58,11 +57,7 @@ def verify_access_token(access_token: str) -> token.TokenPayload:
         )
         return token.TokenPayload(**payload)
     except (jwt.InvalidTokenError, ValidationError) as e:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        ) from e
+        raise ValueError("The token data is invalid") from e
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
