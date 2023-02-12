@@ -7,6 +7,7 @@ from __future__ import annotations
 import typing
 from typing import Generic, TypeVar
 
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import SQLModel, select
 
 if typing.TYPE_CHECKING:
@@ -96,7 +97,10 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         db_obj = self.model.from_orm(obj_in)
         db.add(db_obj)
-        await db.commit()
+        try:
+            await db.commit()
+        except IntegrityError as e:
+            raise ValueError("email must be unique") from e
         await db.refresh(db_obj)
         return db_obj
 
