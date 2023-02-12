@@ -115,9 +115,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             the user object, otherwise it returns None.
         """
         user = await self.get_by_email(db, email=email)
-        if not user:
-            return None
-        if not security.verify_password(password, user.password):
+        if not user or not security.verify_password(password, user.password):
             return None
         return user
 
