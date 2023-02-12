@@ -5,8 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm  # noqa: TC002
 from pydantic import EmailStr
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
-from app.core import security
-
+from ..core import security
 from ..crud import user
 from ..database import get_db
 from ..models.token import Token
