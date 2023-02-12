@@ -16,6 +16,7 @@ uvicorn = {extras = ["standard"], version = "^0.20.0"}
 pydantic = {extras = ["dotenv", "email"], version = "^1.10.4"}
 passlib = {extras = ["argon2"], version = "^1.7.4"}
 pyjwt = "^2.6.0"
+python-multipart = "^0.0.5"
 
 [tool.poetry.group.dev.dependencies]
 types-passlib = "^1.7.7.8"
