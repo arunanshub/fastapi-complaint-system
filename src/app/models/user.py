@@ -27,8 +27,13 @@ class UserCreate(SQLModel):
     password: str
 
 
-class UserRead(UserBase):
-    pass
+class UserRead(SQLModel):
+    email: EmailStr
+    first_name: str
+    last_name: str
+    role: Role
+    phone: str | None
+    iban: str | None
 
 
 class UserUpdate(SQLModel):
