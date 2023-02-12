@@ -5,6 +5,7 @@ from datetime import datetime  # noqa: TC003
 from pydantic import HttpUrl  # noqa: TC002
 from sqlmodel import Column, Field, SQLModel, Text, func
 
+from .base import SQLBase
 from .enums import ComplaintStatus
 
 
@@ -25,6 +26,5 @@ class ComplaintBase(SQLModel):
     )
 
 
-class Complaint(ComplaintBase, table=True):  # type: ignore[call-arg]
-    id: int | None = Field(default=None, primary_key=True)
+class Complaint(SQLBase, ComplaintBase, table=True):  # type: ignore[call-arg]
     complainer_id: int = Field(default=None, foreign_key="user.id")
