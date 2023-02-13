@@ -98,6 +98,32 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             The created database object.
         """
         db_obj = self.model.from_orm(obj_in)
+        return await self.add_record(db, db_obj=db_obj)
+
+    async def add_record(
+        self,
+        db: AsyncSession,
+        *,
+        db_obj: ModelType,
+    ) -> ModelType:
+        """Adds a new record in the database and checks for integrity issues.
+
+        Args:
+            db:
+                Asynchronous SQLAlchemy session object used to perform database
+                operations.
+
+        Keyword Args:
+            db_obj:
+                Data for the new record that will be inserted into the
+                database.
+
+        Returns:
+            The created database object.
+
+        Raises:
+            NotUniqueError: If the record already exists in database.
+        """
         db.add(db_obj)
         try:
             await db.commit()
@@ -132,11 +158,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         update_data = obj_in.dict(exclude_unset=True)
         for field in update_data:
             setattr(db_obj, field, update_data[field])
-
-        db.add(db_obj)
-        await db.commit()
-        await db.refresh(db_obj)
-        return db_obj
+        return await self.add_record(db, db_obj=db_obj)
 
     async def delete(self, db: AsyncSession, *, id: int) -> None:
         """Deletes a record from the database based on the given id.
