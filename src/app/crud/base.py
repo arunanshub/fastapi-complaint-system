@@ -10,7 +10,7 @@ from typing import Generic, TypeVar
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import SQLModel, select
 
-from ..exc import NotUniqueError
+from ..exc import DoesNotExistError, NotUniqueError
 
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
@@ -177,7 +177,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         Keyword Args:
             id: The unique identifier/primary key for the record.
+
+        Raises:
+            DoesNotExistError: Raised if the record does not exist.
         """
         obj = await db.get(self.model, id)
+        if obj is None:
+            raise DoesNotExistError("the record does not exist")
         await db.delete(obj)
         await db.commit()
