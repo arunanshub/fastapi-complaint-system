@@ -1,0 +1,49 @@
+from __future__ import annotations
+
+import typing
+
+from sqlmodel import select
+
+if typing.TYPE_CHECKING:
+    from sqlmodel.ext.asyncio.session import AsyncSession
+    from ..models.user import User
+
+from ..models.complaint import Complaint, ComplaintCreate, ComplaintUpdate
+from ..models.enums import ComplaintStatus
+from .base import CRUDBase
+
+
+class CRUDComplaint(CRUDBase[Complaint, ComplaintCreate, ComplaintUpdate]):
+    async def get_by_user(
+        self,
+        db: AsyncSession,
+        *,
+        db_obj: User,
+        skip: int = 0,
+        limit: int = 100,
+    ) -> list[Complaint]:
+        stmt = (
+            select(self.model)
+            .where(self.model.complainer_id == db_obj.id)
+            .offset(skip)
+            .limit(limit)
+        )
+        return (await db.execute(stmt)).scalars().all()
+
+    async def get_pending(
+        self,
+        db: AsyncSession,
+        *,
+        skip: int = 0,
+        limit: int = 100,
+    ) -> list[Complaint]:
+        stmt = (
+            select(self.model)
+            .where(self.model.status == ComplaintStatus.PENDING)
+            .offset(skip)
+            .limit(limit)
+        )
+        return (await db.execute(stmt)).scalars().all()
+
+
+complaint = CRUDComplaint(Complaint)
