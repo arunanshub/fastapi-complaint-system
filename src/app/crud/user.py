@@ -40,7 +40,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         Returns:
             ``User`` if user is found, ``None`` otherwise.
         """
-        stmt = select(User).where(User.email == email)
+        stmt = select(self.model).where(self.model.email == email)
         return (await db.execute(stmt)).scalar_one_or_none()
 
     async def create(self, db: AsyncSession, *, obj_in: UserCreate) -> User:
