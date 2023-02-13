@@ -6,6 +6,7 @@ import typing
 if typing.TYPE_CHECKING:
     from pydantic import EmailStr
     from sqlmodel.ext.asyncio.session import AsyncSession
+    from sqlmodel import SQLModel
 
 from sqlmodel import select
 
@@ -43,7 +44,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         stmt = select(self.model).where(self.model.email == email)
         return (await db.execute(stmt)).scalar_one_or_none()
 
-    async def create(self, db: AsyncSession, *, obj_in: UserCreate) -> User:
+    async def create(
+        self,
+        db: AsyncSession,
+        *,
+        obj_in: UserCreate,
+        **kwargs: SQLModel,
+    ) -> User:
         """Creates a new user in the database.
 
         Before ading the user in the database, the user's password is hashed.
@@ -56,12 +63,16 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         Keyword Args:
             obj_in:
                 Data for the new user that will be inserted into the database.
+            kwargs:
+                Additional attributes controlled by foreign keys in
+                relationships to be set on the new database object beyond those
+                specified in ``obj_in``.
 
         Returns:
             The created database object.
         """
         obj_in.password = security.get_password_hash(obj_in.password)
-        return await super().create(db, obj_in=obj_in)
+        return await super().create(db, obj_in=obj_in, **kwargs)
 
     async def update(
         self,

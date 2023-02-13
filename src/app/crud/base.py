@@ -81,6 +81,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db: AsyncSession,
         *,
         obj_in: CreateSchemaType,
+        **kwargs: SQLModel,
     ) -> ModelType:
         """Creates a new record in the database.
 
@@ -93,11 +94,17 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             obj_in:
                 Data for the new record that will be inserted into the
                 database.
+            kwargs:
+                Additional attributes controlled by foreign keys in
+                relationships to be set on the new database object beyond those
+                specified in ``obj_in``.
 
         Returns:
             The created database object.
         """
         db_obj = self.model.from_orm(obj_in)
+        for key, value in kwargs.items():
+            setattr(db_obj, key, value)
         return await self.add_record(db, db_obj=db_obj)
 
     async def add_record(
