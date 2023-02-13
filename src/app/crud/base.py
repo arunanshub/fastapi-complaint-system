@@ -10,6 +10,8 @@ from typing import Generic, TypeVar
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import SQLModel, select
 
+from ..exc import NotUniqueError
+
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -100,7 +102,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         try:
             await db.commit()
         except IntegrityError as e:
-            raise ValueError("email must be unique") from e
+            raise NotUniqueError("field(s) must be unique") from e
         await db.refresh(db_obj)
         return db_obj
 

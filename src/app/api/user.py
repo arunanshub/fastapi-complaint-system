@@ -7,6 +7,7 @@ from starlette import status
 from ..api.deps import get_current_user
 from ..crud import user
 from ..database import get_db
+from ..exc import NotUniqueError
 from ..models.user import User, UserCreate, UserRead
 
 router = APIRouter()
@@ -28,8 +29,8 @@ async def register(
 ) -> User:
     try:
         return await user.create(db, obj_in=user_in)
-    except ValueError as e:
+    except NotUniqueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail="User already exists",
         ) from e
