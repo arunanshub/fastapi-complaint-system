@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
-from ..api.deps import get_current_complainer
+from app.exc import DoesNotExistError
+
+from ..api.deps import get_current_admin, get_current_complainer
 from ..crud import complaint
 from ..database import get_db
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintRead
@@ -35,3 +37,21 @@ async def create_complaint(
         obj_in=complaint_in,
         user=db_user,
     )
+
+
+@router.delete(
+    "/{complaint_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(get_current_admin)],
+)
+async def delete_complaint(
+    complaint_id: int,
+    db: AsyncSession = Depends(get_db),
+):  # noqa: ANN201
+    try:
+        return await complaint.delete(db, id=complaint_id)
+    except DoesNotExistError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Complaint does not exist",
+        ) from e
