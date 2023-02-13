@@ -5,8 +5,10 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
 from ..core import security, settings
+from ..crud import user as user_crud
 from ..database import get_db
-from ..models.user import User
+from ..models.enums import Role
+from ..models.user import User  # noqa: TC002
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_VERSION_URL}/login/token"
@@ -39,10 +41,39 @@ async def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         ) from e
 
-    user = await db.get(User, token_data.sub)
+    user = await user_crud.get(db, id=token_data.sub)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found",
         )
     return user
+
+
+async def get_current_complainer(
+    user: User = Depends(get_current_user),
+) -> User:
+    if user.role == Role.COMPLAINER:
+        return user
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="User does not have enough privileges",
+    )
+
+
+async def get_current_approver(user: User = Depends(get_current_user)) -> User:
+    if user.role == Role.APPROVER:
+        return user
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="User does not have enough privileges",
+    )
+
+
+async def get_current_admin(user: User = Depends(get_current_user)) -> User:
+    if user.role == Role.ADMIN:
+        return user
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="User does not have enough privileges",
+    )
