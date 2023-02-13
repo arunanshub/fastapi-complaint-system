@@ -30,6 +30,7 @@ class UserCreate(SQLModel):
 
 
 class UserRead(SQLModel):
+    id: int
     email: EmailStr
     first_name: str
     last_name: str
