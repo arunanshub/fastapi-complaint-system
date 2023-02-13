@@ -13,4 +13,4 @@ class Token(SQLModel):
 class TokenPayload(SQLModel):
     """The token contents."""
 
-    sub: int | None
+    sub: int
