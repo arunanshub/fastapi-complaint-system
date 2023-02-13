@@ -29,12 +29,16 @@ class ComplaintBase(SQLModel):
     )
 
 
-class ComplaintCreate(ComplaintBase):
-    pass
+class ComplaintCreate(SQLModel):
+    title: str = Field(max_length=120)
+    description: str
+    photo_url: HttpUrl
+    amount: float
+    created_at: datetime | None
 
 
 class ComplaintUpdate(SQLModel):
-    title: str | None
+    title: str | None = Field(max_length=120)
     description: str | None
     photo_url: HttpUrl | None
     amount: float | None
