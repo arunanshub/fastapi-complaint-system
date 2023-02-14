@@ -8,7 +8,8 @@ from starlette import status
 from ..api.deps import get_current_admin, get_current_user
 from ..crud import user
 from ..database import get_db
-from ..exc import NotUniqueError
+from ..exc import DoesNotExistError, NotUniqueError
+from ..models.enums import Role
 from ..models.user import User, UserCreate, UserRead
 
 router = APIRouter()
@@ -49,4 +50,40 @@ async def register(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="User already exists",
+        ) from e
+
+
+@router.put(
+    "/{user_id}/make-admin",
+    response_model=UserRead,
+    dependencies=[Depends(get_current_admin)],
+)
+async def make_admin(
+    user_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    try:
+        return await user.change_role_by_id(db, id=user_id, role=Role.ADMIN)
+    except DoesNotExistError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User does not exist",
+        ) from e
+
+
+@router.put(
+    "/{user_id}/make-approver",
+    response_model=UserRead,
+    dependencies=[Depends(get_current_admin)],
+)
+async def make_approver(
+    user_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    try:
+        return await user.change_role_by_id(db, id=user_id, role=Role.APPROVER)
+    except DoesNotExistError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User does not exist",
         ) from e
