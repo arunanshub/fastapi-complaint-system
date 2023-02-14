@@ -7,10 +7,12 @@ if typing.TYPE_CHECKING:
     from pydantic import EmailStr
     from sqlmodel.ext.asyncio.session import AsyncSession
     from sqlmodel import SQLModel
+    from ..models.enums import Role
 
 from sqlmodel import select
 
 from ..core import security
+from ..exc import DoesNotExistError
 from ..models.user import User, UserCreate, UserUpdate
 from .base import CRUDBase
 
@@ -129,6 +131,37 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         if not user or not security.verify_password(password, user.password):
             return None
         return user
+
+    async def change_role_by_id(
+        self,
+        db: AsyncSession,
+        *,
+        id: int,
+        role: Role,
+    ) -> User:
+        """
+        Change a user's role by id.
+
+        Args:
+            db:
+                Asynchronous SQLAlchemy session object used to perform database
+                operations.
+
+        Keyword Args:
+            id: The id of the user.
+            role: The role to grant to the user.
+
+        Returns:
+            The user with the updated role.
+
+        Raises:
+            DoesNotExistError: Raised if the user does not exist.
+        """
+        db_obj = await self.get(db, id=id)
+        if db_obj is None:
+            raise DoesNotExistError("The user does not exist")
+        db_obj.role = role
+        return await self.add_record(db, db_obj=db_obj)
 
 
 user = CRUDUser(User)
