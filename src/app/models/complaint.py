@@ -34,15 +34,14 @@ class ComplaintCreate(SQLModel):
     description: str
     photo_url: HttpUrl
     amount: float
-    created_at: datetime | None
 
 
 class ComplaintUpdate(SQLModel):
-    title: str | None = Field(max_length=120)
-    description: str | None
-    photo_url: HttpUrl | None
-    amount: float | None
-    status: ComplaintStatus | None
+    title: str | None = Field(default=None, max_length=120)
+    description: str | None = None
+    photo_url: HttpUrl | None = None
+    amount: float | None = None
+    status: ComplaintStatus | None = None
 
 
 class ComplaintRead(SQLModel):
