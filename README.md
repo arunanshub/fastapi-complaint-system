@@ -3,6 +3,8 @@
 The Complaint System is a backend service for a complaint management system. It
 provides a REST API to manage complaint tickets, users, and other information.
 
+This project is based on the [Udemy tutorial on FastAPI][udemy].
+
 ## Setting Up
 
 To set up the project, you need to have the following installed on your
@@ -58,6 +60,25 @@ terminal:
 alembic upgrade head
 ```
 
+## Creating the Admin
+
+The API provides a command line interface for creating an admin user. To create
+an admin, use the following command in your terminal:
+
+
+```bash
+python -m <module_name> create-admin \
+    --first-name <first_name> \
+    --last-name <last_name> \
+    --email <email> \
+    --phone <phone> \
+    --iban <iban> \
+    --password <password>
+```
+
+This will create an admin user in the database with the provided information.
+The created user will have the role of `ADMIN`.
+
 ## Run the Project
 
 To run the project, navigate to the root directory of the project and run the
@@ -70,3 +91,24 @@ uvicorn app.main:app
 This will start the development server at `http://localhost:8000/`.
 
 [poetry]: <https://python-poetry.org>
+[udemy]: <https://www.udemy.com/course/fastapi-rest/>
+
+## Improvements
+
+In this project, a number of improvements over the original tutorial have been
+made to enhance the organization and structure of the code.
+
+1. To streamline the process of handling API requests, the endpoints utilize
+   SQLModel and Pydantic models instead of raw requests. This provides a clear
+   and organized approach to data validation and management.
+
+2. The authentication process has been updated to utilize OAuth2, instead of a
+   custom HTTP authentication method. This provides a more secure and
+   standardized approach to authentication.
+
+3. The database operations have been centralized and organized into a `crud`
+   module, making it easier to manage and maintain the database interactions
+   within the API.
+
+4. The API endpoints are located in the `api` module, providing a clear and
+   organized structure for the API routes and functions.
