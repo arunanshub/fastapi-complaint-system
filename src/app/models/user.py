@@ -12,6 +12,7 @@ class UserBase(SQLModel):
     last_name: str | None = Field(max_length=200)
     phone: str | None = Field(max_length=20)
     role: Role | None = Field(
+        default=None,
         nullable=False,
         sa_column_kwargs={
             "server_default": Role.COMPLAINER.name,
