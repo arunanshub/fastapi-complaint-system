@@ -8,6 +8,7 @@ if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
     from ..models.user import User
 
+from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintUpdate
 from ..models.enums import ComplaintStatus
 from .base import CRUDBase
@@ -44,6 +45,19 @@ class CRUDComplaint(CRUDBase[Complaint, ComplaintCreate, ComplaintUpdate]):
             .limit(limit)
         )
         return (await db.execute(stmt)).scalars().all()
+
+    async def change_status_by_id(
+        self,
+        db: AsyncSession,
+        *,
+        id: int,
+        status: ComplaintStatus,
+    ) -> Complaint:
+        db_complaint = await self.get(db, id=id)
+        if db_complaint is None:
+            raise DoesNotExistError("complaint does not exist")
+        complaint_in = ComplaintUpdate(status=status)
+        return await self.update(db, db_obj=db_complaint, obj_in=complaint_in)
 
 
 complaint = CRUDComplaint(Complaint)
