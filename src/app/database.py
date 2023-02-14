@@ -7,7 +7,10 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from .core import settings
 
-engine = create_async_engine(settings.DATABASE_URL)
+engine = create_async_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True,
+)
 
 
 async def get_db() -> typing.AsyncIterable[AsyncSession]:
