@@ -3,12 +3,16 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
-from app.exc import DoesNotExistError
-
-from ..api.deps import get_current_admin, get_current_complainer
+from ..api.deps import (
+    get_current_admin,
+    get_current_approver,
+    get_current_complainer,
+)
 from ..crud import complaint
 from ..database import get_db
+from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintRead
+from ..models.enums import ComplaintStatus
 from ..models.user import User  # noqa: TC002
 
 router = APIRouter()
@@ -50,6 +54,50 @@ async def delete_complaint(
 ):  # noqa: ANN201
     try:
         return await complaint.delete(db, id=complaint_id)
+    except DoesNotExistError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Complaint does not exist",
+        ) from e
+
+
+@router.put(
+    "/{complaint_id}/approve",
+    dependencies=[Depends(get_current_approver)],
+    response_model=ComplaintRead,
+)
+async def approve_complaint(
+    complaint_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> Complaint:
+    try:
+        return await complaint.change_status_by_id(
+            db,
+            id=complaint_id,
+            status=ComplaintStatus.APPROVED,
+        )
+    except DoesNotExistError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Complaint does not exist",
+        ) from e
+
+
+@router.put(
+    "/{complaint_id}/reject",
+    dependencies=[Depends(get_current_approver)],
+    response_model=ComplaintRead,
+)
+async def reject_complaint(
+    complaint_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> Complaint:
+    try:
+        return await complaint.change_status_by_id(
+            db,
+            id=complaint_id,
+            status=ComplaintStatus.REJECTED,
+        )
     except DoesNotExistError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
