@@ -7,12 +7,37 @@ from sqlalchemy.engine import make_url
 
 
 class Settings(BaseSettings):
+    #: The application secret key
     SECRET_KEY: str = Field(default=...)
-    DATABASE_URL: str = Field(default=...)
+
+    #: Access key for accessing AWS services.
+    AWS_ACCESS_KEY: str = Field(default=...)
+
+    #: The AWS secret access key used for accessing AWS services.
+    AWS_SECRET_ACCESS_KEY: str = Field(default=...)
+
+    #: name of the Amazon Web Services (AWS) S3 bucket to be used by the
+    #: application
+    AWS_BUCKET_NAME: str = Field(default=...)
+
+    #: the AWS region to be used for the S3 bucket defined in the
+    #: `AWS_BUCKET_NAME` field
+    AWS_REGION: str = Field(default=...)
+
     #: This URL is derived from ``DATABASE_URL`` and not from the environment.
+    DATABASE_URL: str = Field(default=...)
+
+    #: a URL derived from ``DATABASE_URL`` that excludes the database driver
+    #: name.
     DATABASE_URL_WITHOUT_DRIVER: str = Field(default=None)
+
+    #: The time in minutes after which an access token will expire.
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+    #: The URL path prefix for the API version.
     API_VERSION_URL: str = "/api/v1"
+
+    #: The URL path prefix for the API version.
     PROJECT_NAME: str = "Complaint System"
 
     @validator("DATABASE_URL_WITHOUT_DRIVER", pre=True)
