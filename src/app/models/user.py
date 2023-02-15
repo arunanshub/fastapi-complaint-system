@@ -49,7 +49,6 @@ class UserUpdate(SQLModel):
     first_name: str | None = Field(max_length=200)
     last_name: str | None = Field(max_length=200)
     phone: str | None = Field(max_length=20)
-    role: Role | None
     iban: str | None = Field(max_length=200)
     password: str | None = Field(max_length=255)
 
