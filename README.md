@@ -67,7 +67,7 @@ an admin, use the following command in your terminal:
 
 
 ```bash
-python -m <module_name> create-admin \
+python -m app create-admin \
     --first-name <first_name> \
     --last-name <last_name> \
     --email <email> \
