@@ -10,7 +10,7 @@ from ..crud import user
 from ..database import get_db
 from ..exc import DoesNotExistError, NotUniqueError
 from ..models.enums import Role
-from ..models.user import User, UserCreate, UserRead
+from ..models.user import User, UserCreate, UserRead, UserUpdate
 
 router = APIRouter()
 
@@ -28,6 +28,15 @@ async def get_users(
         return await user.get_multi(db)
     db_user = await user.get_by_email(db, email=email)
     return [db_user] if db_user else []
+
+
+@router.patch("/", response_model=UserRead)
+async def update_user(
+    user_in: UserUpdate,
+    db_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    return await user.update(db, db_obj=db_user, obj_in=user_in)
 
 
 @router.get("/me", response_model=UserRead)
