@@ -39,6 +39,17 @@ application. The important configuration options are as follows:
 - `SECRET_KEY`: A secret key used for signing cookies and other information.
   (**required**)
 
+- `AWS_ACCESS_KEY`: Access key for accessing AWS services. (**required**)
+
+- `AWS_SECRET_ACCESS_KEY`: The AWS secret access key used for accessing AWS
+  services. (**required**)
+
+- `AWS_BUCKET_NAME`: name of the Amazon Web Services (AWS) S3 bucket to be used
+   by the application. (**required**)
+
+- `AWS_REGION`: the AWS region to be used for the S3 bucket defined in the
+   `AWS_BUCKET_NAME` field. (**required**)
+
 - `DATABASE_URL`: The URL to connect to the database. (**required**)
 
 - `ACCESS_TOKEN_EXPIRE_MINUTES`: The number of minutes an access token should
