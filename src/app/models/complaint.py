@@ -59,7 +59,7 @@ class ComplaintReadWithUser(ComplaintRead):
 
 
 class Complaint(SQLBase, ComplaintBase, table=True):  # type: ignore[call-arg]
-    complainer_id: int = Field(default=None, foreign_key="user.id")
+    complainer_id: int = Field(default=None, foreign_key="user.id", index=True)
     user: Optional["User"] = Relationship(
         back_populates="complaints",
         sa_relationship_kwargs={"lazy": "raise"},
