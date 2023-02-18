@@ -11,15 +11,44 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import SQLModel, select
 
 from ..exc import DoesNotExistError, NotUniqueError
+from ..models.base import SQLBase
 
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
 
-from ..models.base import SQLBase
 
 ModelType = TypeVar("ModelType", bound=SQLBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=SQLModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=SQLModel)
+_T = TypeVar("_T", bound="CRUDBaseQueryBuilder")
+
+
+class CRUDBaseQueryBuilder(Generic[ModelType]):
+    def __init__(self, model: type[ModelType], db: AsyncSession):
+        self.db = db
+        self.model = model
+        self.query = select(self.model).order_by(self.model.id)
+
+    def skip(self: _T, skip: int) -> _T:
+        assert self.model.id is not None
+        self.query = self.query.where(self.model.id > skip)
+        return self
+
+    def limit(self: _T, limit: int) -> _T:
+        self.query = self.query.limit(limit)
+        return self
+
+    async def all(self) -> list[ModelType]:
+        return (await self.db.execute(self.query)).scalars().all()
+
+    async def first(self) -> ModelType | None:
+        return (await self.db.execute(self.query.limit(1))).scalar()
+
+    async def one(self) -> ModelType:
+        return (await self.db.execute(self.query)).scalar_one()
+
+    async def one_or_none(self) -> ModelType | None:
+        return (await self.db.execute(self.query)).scalar_one_or_none()
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
@@ -36,6 +65,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: type[ModelType]):
         self.model = model
 
+    def query(self, db: AsyncSession) -> CRUDBaseQueryBuilder[ModelType]:
+        return CRUDBaseQueryBuilder(self.model, db)
+
     async def get(self, db: AsyncSession, *, id: int) -> ModelType | None:
         """Retrieves a single record from the database.
 
@@ -51,30 +83,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             A single record or ``None`` if the record is not found.
         """
         return await db.get(self.model, id)
-
-    async def get_multi(
-        self,
-        db: AsyncSession,
-        *,
-        skip: int = 0,
-        limit: int = 100,
-    ) -> list[ModelType]:
-        """Retrieves multiple records from the database.
-
-        Args:
-            db:
-                Asynchronous SQLAlchemy session object used to perform database
-                operations.
-
-        Keyword Args:
-            skip: the number of records to skip.
-            limit: the number of records to retrieve.
-
-        Returns:
-            Records of models returned as a list.
-        """
-        stmt = select(self.model).offset(skip).limit(limit)
-        return (await db.execute(stmt)).scalars().all()
 
     async def create(
         self,
