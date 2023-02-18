@@ -2,49 +2,36 @@ from __future__ import annotations
 
 import typing
 
-from sqlmodel import select
-
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
     from ..models.user import User
+    from ..models.enums import ComplaintStatus
 
 from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintUpdate
-from ..models.enums import ComplaintStatus
-from .base import CRUDBase
+from .base import CRUDBase, CRUDBaseQueryBuilder
+
+
+class ComplaintQueryBuilder(CRUDBaseQueryBuilder[Complaint]):
+    def filter_by_user(self, user: User) -> ComplaintQueryBuilder:
+        self.query = self.query.where(self.model.complainer_id == user.id)
+        return self
+
+    def filter_by_status(
+        self, status: ComplaintStatus
+    ) -> ComplaintQueryBuilder:
+        self.query = self.query.where(self.model.status == status)
+        return self
 
 
 class CRUDComplaint(CRUDBase[Complaint, ComplaintCreate, ComplaintUpdate]):
-    async def get_by_user(
-        self,
-        db: AsyncSession,
-        *,
-        db_obj: User,
-        skip: int = 0,
-        limit: int = 100,
-    ) -> list[Complaint]:
-        stmt = (
-            select(self.model)
-            .where(self.model.complainer_id == db_obj.id)
-            .offset(skip)
-            .limit(limit)
-        )
-        return (await db.execute(stmt)).scalars().all()
+    def query(self, db: AsyncSession) -> ComplaintQueryBuilder:
+        return ComplaintQueryBuilder(self.model, db)
 
-    async def get_pending(
-        self,
-        db: AsyncSession,
-        *,
-        skip: int = 0,
-        limit: int = 100,
-    ) -> list[Complaint]:
-        stmt = (
-            select(self.model)
-            .where(self.model.status == ComplaintStatus.PENDING)
-            .offset(skip)
-            .limit(limit)
-        )
-        return (await db.execute(stmt)).scalars().all()
+    async def get_by_id(
+        self, db: AsyncSession, *, id: int
+    ) -> Complaint | None:
+        return await self.get(db, id=id)
 
     async def change_status_by_id(
         self,
