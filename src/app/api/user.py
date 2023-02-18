@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import EmailStr  # noqa: TC002
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 from starlette import status
@@ -22,11 +22,13 @@ router = APIRouter()
 )
 async def get_users(
     email: EmailStr | None = None,
+    skip: int = Query(100, ge=0),
+    limit: int = Query(100, ge=0, le=100),
     db: AsyncSession = Depends(get_db),
 ) -> list[User]:
     if email is None:
-        return await user.get_multi(db)
-    db_user = await user.get_by_email(db, email=email)
+        return await user.query(db).limit(limit).skip(skip).all()
+    db_user = await user.query(db).filter_by_email(email).one_or_none()
     return [db_user] if db_user else []
 
 

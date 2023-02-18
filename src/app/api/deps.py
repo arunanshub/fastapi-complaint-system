@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Awaitable, Callable
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
@@ -50,30 +52,25 @@ async def get_current_user(
     return user
 
 
-async def get_current_complainer(
-    user: User = Depends(get_current_user),
-) -> User:
-    if user.role == Role.COMPLAINER:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="User does not have enough privileges",
-    )
+def with_required_roles(*roles: Role) -> Callable[[], Awaitable[User]]:
+    async def get_user_by_role(user: User = Depends(get_current_user)) -> User:
+        if user.role in roles:
+            return user
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User does not have enough privileges",
+        )
+
+    return get_user_by_role
 
 
-async def get_current_approver(user: User = Depends(get_current_user)) -> User:
-    if user.role == Role.APPROVER:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="User does not have enough privileges",
-    )
+async def get_current_complainer() -> User:
+    return await with_required_roles(Role.COMPLAINER)()
 
 
-async def get_current_admin(user: User = Depends(get_current_user)) -> User:
-    if user.role == Role.ADMIN:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="User does not have enough privileges",
-    )
+async def get_current_approver() -> User:
+    return await with_required_roles(Role.APPROVER)()
+
+
+async def get_current_admin() -> User:
+    return await with_required_roles(Role.ADMIN)()

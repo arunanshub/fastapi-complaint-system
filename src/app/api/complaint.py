@@ -1,18 +1,19 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
 from ..api.deps import (
     get_current_admin,
     get_current_approver,
     get_current_complainer,
+    with_required_roles,
 )
 from ..crud import complaint
 from ..database import get_db
 from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintRead
-from ..models.enums import ComplaintStatus
+from ..models.enums import ComplaintStatus, Role
 from ..models.user import User  # noqa: TC002
 
 router = APIRouter()
@@ -20,10 +21,20 @@ router = APIRouter()
 
 @router.get("/", response_model=list[ComplaintRead])
 async def get_complaints(
+    complaint_status: ComplaintStatus | None = None,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=0, le=100),
     db: AsyncSession = Depends(get_db),
-    db_user: User = Depends(get_current_complainer),
+    db_user: User = Depends(
+        with_required_roles(Role.COMPLAINER, Role.APPROVER)
+    ),
 ) -> list[Complaint]:
-    return await complaint.get_by_user(db, db_obj=db_user)
+    query = complaint.query(db).limit(limit).skip(skip)
+    if complaint_status is not None:
+        query = query.filter_by_status(complaint_status)
+    if db_user.role == Role.APPROVER:
+        return await query.all()
+    return await query.filter_by_user(db_user).all()
 
 
 @router.post(
