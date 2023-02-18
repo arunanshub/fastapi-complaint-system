@@ -9,12 +9,16 @@ if typing.TYPE_CHECKING:
     from sqlmodel import SQLModel
     from ..models.enums import Role
 
-from sqlmodel import select
-
 from ..core import security
 from ..exc import DoesNotExistError
 from ..models.user import User, UserCreate, UserUpdate
-from .base import CRUDBase
+from .base import CRUDBase, CRUDBaseQueryBuilder
+
+
+class UserQueryBuilder(CRUDBaseQueryBuilder[User]):
+    def filter_by_email(self, email: EmailStr) -> UserQueryBuilder:
+        self.query = self.query.where(self.model.email == email)
+        return self
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -24,27 +28,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     the User model.
     """
 
-    async def get_by_email(
-        self,
-        db: AsyncSession,
-        *,
-        email: EmailStr,
-    ) -> User | None:
-        """Retrieve a single User record by email.
-
-        Args:
-            db:
-                Asynchronous SQLAlchemy session object used to perform database
-                operations.
-
-        Keyword Args:
-            email: A vaild email address as string.
-
-        Returns:
-            ``User`` if user is found, ``None`` otherwise.
-        """
-        stmt = select(self.model).where(self.model.email == email)
-        return (await db.execute(stmt)).scalar_one_or_none()
+    def query(self, db: AsyncSession) -> UserQueryBuilder:
+        return UserQueryBuilder(self.model, db)
 
     async def create(
         self,
@@ -127,10 +112,12 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             If the user is found and the password matches, the method returns
             the user object, otherwise it returns None.
         """
-        user = await self.get_by_email(db, email=email)
-        if not user or not security.verify_password(password, user.password):
-            return None
-        return user
+        db_user = (
+            await self.query(db).filter_by_email(email=email).one_or_none()
+        )
+        if db_user and security.verify_password(password, db_user.password):
+            return db_user
+        return None
 
     async def change_role_by_id(
         self,
