@@ -22,7 +22,7 @@ router = APIRouter()
 )
 async def get_users(
     email: EmailStr | None = None,
-    skip: int = Query(100, ge=0),
+    skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=0, le=100),
     db: AsyncSession = Depends(get_db),
 ) -> list[User]:
