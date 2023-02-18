@@ -52,7 +52,7 @@ async def get_current_user(
     return user
 
 
-def with_required_roles(*roles: Role) -> Callable[[], Awaitable[User]]:
+def with_required_roles(*roles: Role) -> Callable[[User], Awaitable[User]]:
     async def get_user_by_role(user: User = Depends(get_current_user)) -> User:
         if user.role in roles:
             return user
@@ -64,13 +64,15 @@ def with_required_roles(*roles: Role) -> Callable[[], Awaitable[User]]:
     return get_user_by_role
 
 
-async def get_current_complainer() -> User:
-    return await with_required_roles(Role.COMPLAINER)()
+async def get_current_complainer(
+    user: User = Depends(get_current_user),
+) -> User:
+    return await with_required_roles(Role.COMPLAINER)(user)
 
 
-async def get_current_approver() -> User:
-    return await with_required_roles(Role.APPROVER)()
+async def get_current_approver(user: User = Depends(get_current_user)) -> User:
+    return await with_required_roles(Role.APPROVER)(user)
 
 
-async def get_current_admin() -> User:
-    return await with_required_roles(Role.ADMIN)()
+async def get_current_admin(user: User = Depends(get_current_user)) -> User:
+    return await with_required_roles(Role.ADMIN)(user)
