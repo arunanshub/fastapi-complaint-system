@@ -45,7 +45,10 @@ class CRUDBaseQueryBuilder(Generic[ModelType]):
         return (await self.db.execute(self.query.limit(1))).scalar()
 
     async def one(self) -> ModelType:
-        return (await self.db.execute(self.query)).scalar_one()
+        return typing.cast(
+            "ModelType",
+            (await self.db.execute(self.query)).scalar_one(),
+        )
 
     async def one_or_none(self) -> ModelType | None:
         return (await self.db.execute(self.query)).scalar_one_or_none()
