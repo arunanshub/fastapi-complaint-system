@@ -58,13 +58,14 @@ async def create_complaint(
     "/{complaint_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     dependencies=[Depends(get_current_admin)],
+    response_model=None,
 )
 async def delete_complaint(
     complaint_id: int,
     db: AsyncSession = Depends(get_db),
-):  # noqa: ANN201
+) -> None:
     try:
-        return await complaint.delete(db, id=complaint_id)
+        await complaint.delete(db, id=complaint_id)
     except DoesNotExistError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
