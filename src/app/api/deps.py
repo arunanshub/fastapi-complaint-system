@@ -26,7 +26,7 @@ async def get_current_user(
 
     Args:
         db: An async session object.
-        access_token: A JWT token as a string.
+        access_token: A token as a string.
 
     Returns:
         The user from the database.
