@@ -53,7 +53,7 @@ class UserUpdate(SQLModel):
     password: str | None = Field(max_length=255)
 
 
-class User(SQLBase, UserBase, table=True):  # type: ignore[call-arg]
+class User(SQLBase, UserBase, table=True):
     password: str = Field(max_length=255)
     complaints: list["Complaint"] = Relationship(
         back_populates="user",
