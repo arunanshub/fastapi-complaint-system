@@ -1,6 +1,18 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+import os
+import typing
+import uuid
+
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Query,
+    UploadFile,
+    status,
+)
+from fastapi.concurrency import run_in_threadpool
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
 from ..api.deps import (
@@ -12,9 +24,18 @@ from ..api.deps import (
 from ..crud import complaint
 from ..database import get_db
 from ..exc import DoesNotExistError
-from ..models.complaint import Complaint, ComplaintCreate, ComplaintRead
+from ..models.complaint import (
+    Complaint,
+    ComplaintCreate,
+    ComplaintCreateUser,
+    ComplaintRead,
+)
 from ..models.enums import ComplaintStatus, Role
 from ..models.user import User  # noqa: TC002
+from ..services.s3 import S3Service, get_s3
+
+if typing.TYPE_CHECKING:
+    from pydantic import HttpUrl
 
 router = APIRouter()
 
@@ -41,15 +62,37 @@ async def get_complaints(
     status_code=status.HTTP_201_CREATED,
 )
 async def create_complaint(
-    complaint_in: ComplaintCreate,
+    photo: UploadFile,
+    complaint_in: ComplaintCreateUser = Depends(),
+    s3_client: S3Service = Depends(get_s3),
     db: AsyncSession = Depends(get_db),
     db_user: User = Depends(get_current_complainer),
 ) -> Complaint:
-    return await complaint.create(
-        db,
-        obj_in=complaint_in,
-        user=db_user,
+    # check if uploaded file is valid
+    assert photo.filename is not None
+    if photo.content_type not in ["image/jpeg", "image/png"]:
+        raise HTTPException(
+            detail=f"Invalid file type: {photo.content_type}",
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+
+    # generate filename, upload photo and generate photo url
+    extension = os.path.splitext(photo.filename)[1]
+    filename = f"{uuid.uuid4()}{extension}"
+    await run_in_threadpool(
+        s3_client.upload_fileobj,
+        photo.file,
+        filename,
+        photo.content_type,
     )
+    photo_url = typing.cast("HttpUrl", s3_client.get_object_url(filename))
+
+    # store the generated url in the database
+    complaint_data = ComplaintCreate(
+        **complaint_in.dict(),
+        photo_url=photo_url,
+    )
+    return await complaint.create(db, obj_in=complaint_data, user=db_user)
 
 
 @router.delete(
