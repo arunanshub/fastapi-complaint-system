@@ -13,3 +13,9 @@ class DoesNotExistError(Exception):
     Exception class representing an error that occurs when a database record is
     not found.
     """
+
+
+class UploadFailedError(Exception):
+    """
+    Exception class representing an error that occurs when upload fails.
+    """
