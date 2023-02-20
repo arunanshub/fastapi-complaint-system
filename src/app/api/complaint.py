@@ -7,7 +7,7 @@ from ..api.deps import (
     get_current_admin,
     get_current_approver,
     get_current_complainer,
-    with_required_roles,
+    get_current_user,
 )
 from ..crud import complaint
 from ..database import get_db
@@ -25,14 +25,12 @@ async def get_complaints(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=0, le=100),
     db: AsyncSession = Depends(get_db),
-    db_user: User = Depends(
-        with_required_roles(Role.COMPLAINER, Role.APPROVER)
-    ),
+    db_user: User = Depends(get_current_user),
 ) -> list[Complaint]:
     query = complaint.query(db).limit(limit).skip(skip)
     if complaint_status is not None:
         query = query.filter_by_status(complaint_status)
-    if db_user.role == Role.APPROVER:
+    if db_user.role in [Role.APPROVER, Role.ADMIN]:
         return await query.all()
     return await query.filter_by_user(db_user).all()
 
