@@ -39,7 +39,17 @@ class ComplaintBase(SQLModel):
     )
 
 
+class ComplaintCreateUser(SQLModel):
+    """Complaint data that is supplied by the user."""
+
+    title: str = Field(max_length=120)
+    description: str
+    amount: Monetary
+
+
 class ComplaintCreate(SQLModel):
+    """Complaint data that is supplied to the database."""
+
     title: str = Field(max_length=120)
     description: str
     photo_url: HttpUrl
