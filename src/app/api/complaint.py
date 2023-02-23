@@ -22,7 +22,7 @@ from ..api.deps import (
     get_current_complainer,
     get_current_user,
 )
-from ..crud import complaint
+from ..crud import complaint, user
 from ..database import get_db
 from ..exc import DoesNotExistError
 from ..models.complaint import (
@@ -34,6 +34,7 @@ from ..models.complaint import (
 from ..models.enums import ComplaintStatus, Role
 from ..models.user import User  # noqa: TC002
 from ..services.s3 import S3Service, get_s3
+from ..services.ses import SESService, get_ses
 
 if typing.TYPE_CHECKING:
     from pydantic import HttpUrl
@@ -123,9 +124,10 @@ async def delete_complaint(
 async def approve_complaint(
     complaint_id: int,
     db: AsyncSession = Depends(get_db),
+    ses_client: SESService = Depends(get_ses),
 ) -> Complaint:
     try:
-        return await complaint.change_status_by_id(
+        db_complaint = await complaint.change_status_by_id(
             db,
             id=complaint_id,
             status=ComplaintStatus.APPROVED,
@@ -136,6 +138,19 @@ async def approve_complaint(
             detail="Complaint does not exist",
         ) from e
 
+    db_user = await user.get(db, id=db_complaint.complainer_id)
+    assert db_user is not None  # TODO: what if user is deleted?
+    assert db_user.email is not None
+
+    await run_in_threadpool(
+        ses_client.send_email,
+        "Complaint approved!",
+        "Your claim has been approved!",
+        [db_user.email],
+    )
+
+    return db_complaint
+
 
 @router.put(
     "/{complaint_id}/reject",
@@ -145,9 +160,10 @@ async def approve_complaint(
 async def reject_complaint(
     complaint_id: int,
     db: AsyncSession = Depends(get_db),
+    ses_client: SESService = Depends(get_ses),
 ) -> Complaint:
     try:
-        return await complaint.change_status_by_id(
+        db_complaint = await complaint.change_status_by_id(
             db,
             id=complaint_id,
             status=ComplaintStatus.REJECTED,
@@ -157,3 +173,16 @@ async def reject_complaint(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Complaint does not exist",
         ) from e
+
+    db_user = await user.get(db, id=db_complaint.complainer_id)
+    assert db_user is not None  # TODO: what if user is deleted?
+    assert db_user.email is not None
+
+    await run_in_threadpool(
+        ses_client.send_email,
+        "Complaint approved!",
+        "Your claim has been rejected!",
+        [db_user.email],
+    )
+
+    return db_complaint
