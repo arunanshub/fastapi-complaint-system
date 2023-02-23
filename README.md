@@ -47,8 +47,10 @@ application. The important configuration options are as follows:
 - `AWS_BUCKET_NAME`: name of the Amazon Web Services (AWS) S3 bucket to be used
    by the application. (**required**)
 
-- `AWS_REGION`: the AWS region to be used for the S3 bucket defined in the
+- `AWS_SES_REGION_NAME`: the AWS region to be used for the S3 bucket defined in the
    `AWS_BUCKET_NAME` field. (**required**)
+
+- `AWS_SES_EMAIL_SENDER`: the ID that is used to send emails to users (**required**)
 
 - `DATABASE_URL`: The URL to connect to the database. (**required**)
 
