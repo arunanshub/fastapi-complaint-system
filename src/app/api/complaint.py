@@ -13,6 +13,7 @@ from fastapi import (
     status,
 )
 from fastapi.concurrency import run_in_threadpool
+from pyfa_converter import FormDepends  # type: ignore[import]
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
 from ..api.deps import (
@@ -63,7 +64,7 @@ async def get_complaints(
 )
 async def create_complaint(
     photo: UploadFile,
-    complaint_in: ComplaintCreateUser = Depends(),
+    complaint_in: ComplaintCreateUser = FormDepends(ComplaintCreateUser),
     s3_client: S3Service = Depends(get_s3),
     db: AsyncSession = Depends(get_db),
     db_user: User = Depends(get_current_complainer),
