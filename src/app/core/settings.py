@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseSettings, Field, validator
+from pydantic import BaseSettings, EmailStr, Field, validator
 from sqlalchemy.engine import make_url
 
 
@@ -20,9 +20,11 @@ class Settings(BaseSettings):
     #: application
     AWS_BUCKET_NAME: str = Field(default=...)
 
-    #: the AWS region to be used for the S3 bucket defined in the
-    #: `AWS_BUCKET_NAME` field
-    AWS_REGION: str = Field(default=...)
+    #: the AWS region to be used for SES.
+    AWS_SES_REGION_NAME: str = Field(default=...)
+
+    #: the SES email sender
+    AWS_SES_EMAIL_SENDER: EmailStr = Field(default=...)
 
     #: This URL is derived from ``DATABASE_URL`` and not from the environment.
     DATABASE_URL: str = Field(default=...)
