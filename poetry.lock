@@ -1322,6 +1322,23 @@ dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
 
 [[package]]
+name = "pyfa-converter"
+version = "1.0.3.0"
+description = "Pydantic to fastapi model converter."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pyfa-converter-1.0.3.0.tar.gz", hash = "sha256:3f72fdaa9fc28d4e5e185eb4b3b16da3569cb399a8eca4fa0430f7809eb67f70"},
+    {file = "pyfa_converter-1.0.3.0-py3-none-any.whl", hash = "sha256:7933478447802cddad681dc177e9be96e100a9c1a9d1686b8f0fb5e996259ed7"},
+]
+
+[package.dependencies]
+fastapi = ">=0.65"
+pydantic = ">=1.6"
+python-multipart = ">=0.0.5,<0.0.6"
+
+[[package]]
 name = "pygments"
 version = "2.14.0"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -1932,4 +1949,4 @@ postgres = ["psycopg2-binary", "asyncpg"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "6aef9b77f820bbf9bae19d7b100d20ca5d769a120b2739f8691f740f2f5e0bac"
+content-hash = "19579e74d96c16360e42b6699e2ea7d2787e688b41213189b4a69010db9e6142"
