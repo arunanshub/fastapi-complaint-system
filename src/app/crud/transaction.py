@@ -7,10 +7,18 @@ from ..models.transaction import (
     TransactionCreate,
     TransactionUpdate,
 )
-from .base import CRUDBase
+from .base import BaseQueryBuilder, CRUDBase
 
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
+
+T = typing.TypeVar("T", bound="TransactionQueryBuilder")
+
+
+class TransactionQueryBuilder(BaseQueryBuilder[Transaction]):
+    def filter_by_complaint_id(self: T, complaint_id: int) -> T:
+        self.query = self.query.where(self.model.complaint_id == complaint_id)
+        return self
 
 
 class CRUDTransaction(
@@ -26,6 +34,9 @@ class CRUDTransaction(
     ) -> Transaction:
         del db, db_obj, obj_in
         raise NotImplementedError("Cannot update a transaction")
+
+    def query(self, db: AsyncSession) -> TransactionQueryBuilder:
+        return TransactionQueryBuilder(self.model, db)
 
 
 transaction = CRUDTransaction(Transaction)
