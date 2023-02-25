@@ -15,6 +15,6 @@ metadata = SQLModel.metadata
 metadata.naming_convention = NAMING_CONVENTION
 
 
-from . import complaint, user  # noqa: E402
+from . import complaint, transaction, user  # noqa: E402
 
-__all__ = ["metadata", "user", "complaint"]
+__all__ = ["metadata", "user", "complaint", "transaction"]
