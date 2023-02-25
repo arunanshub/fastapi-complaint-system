@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import sys
 import typing
 
 import asyncclick as click
+from tenacity import RetryError, retry, stop_after_attempt, wait_fixed
+
+from . import main
 
 if typing.TYPE_CHECKING:
     from pydantic import EmailStr
@@ -58,6 +62,32 @@ async def create_admin(
         db_user = await user.create(db, obj_in=user_in)
         assert db_user.id is not None
         await user.change_role_by_id(db, id=db_user.id, role=Role.ADMIN)
+
+
+@cli.command()
+@click.option("-m", "--max-tries", type=int, default=60 * 5, show_default=True)
+@click.option("-w", "--wait-seconds", type=int, default=5, show_default=True)
+async def pre_start(max_tries: int, wait_seconds: int) -> None:
+    """Check if all services are functional.
+
+    If not functional, retry.
+    """
+
+    @retry(
+        stop=stop_after_attempt(max_tries),
+        wait=wait_fixed(wait_seconds),
+    )
+    async def retrier() -> None:
+        await main.check_services()
+        raise ValueError
+
+    try:
+        await retrier()
+    except RetryError:
+        click.secho("Error in system!", fg="red")
+        sys.exit(1)
+
+    click.secho("Everything is functional", fg="green")
 
 
 if __name__ == "__main__":
