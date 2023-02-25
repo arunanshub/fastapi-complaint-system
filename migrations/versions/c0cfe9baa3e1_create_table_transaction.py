@@ -1,8 +1,8 @@
 """create table transaction
 
-Revision ID: d8de83befba2
+Revision ID: c0cfe9baa3e1
 Revises: f88dc6c095bb
-Create Date: 2023-02-24 19:45:13.646731
+Create Date: 2023-02-25 16:31:47.388407
 
 """
 from __future__ import annotations
@@ -12,7 +12,7 @@ import sqlmodel.sql.sqltypes
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "d8de83befba2"
+revision = "c0cfe9baa3e1"
 down_revision = "f88dc6c095bb"
 branch_labels = None
 depends_on = None
@@ -26,8 +26,8 @@ def upgrade() -> None:
         sa.Column("transfer_id", sa.Integer(), nullable=False),
         sa.Column("target_account_id", sa.Integer(), nullable=False),
         sa.Column("amount", sa.Numeric(precision=19, scale=4), nullable=False),
+        sa.Column("complaint_id", sa.Integer(), nullable=False),
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("complaint_id", sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(
             ["complaint_id"],
             ["complaint.id"],

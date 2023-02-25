@@ -12,6 +12,7 @@ class TransactionBase(SQLModel):
     transfer_id: int
     target_account_id: int
     amount: Monetary
+    complaint_id: int = Field(foreign_key="complaint.id")
 
 
 class TransactionCreate(TransactionBase):
@@ -23,4 +24,4 @@ class TransactionUpdate(SQLModel):
 
 
 class Transaction(SQLBase, TransactionBase, table=True):
-    complaint_id: int = Field(default=None, foreign_key="complaint.id")
+    pass
