@@ -1907,6 +1907,21 @@ typing-extensions = {version = ">=3.10.0", markers = "python_version < \"3.10\""
 full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyaml"]
 
 [[package]]
+name = "tenacity"
+version = "8.2.1"
+description = "Retry code until it succeeds"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "tenacity-8.2.1-py3-none-any.whl", hash = "sha256:dd1b769ca7002fda992322939feca5bee4fa11f39146b0af14e0b8d9f27ea854"},
+    {file = "tenacity-8.2.1.tar.gz", hash = "sha256:c7bb4b86425b977726a7b49971542d4f67baf72096597d283f3ffd01f33b92df"},
+]
+
+[package.extras]
+doc = ["reno", "sphinx", "tornado (>=4.5)"]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -2239,4 +2254,4 @@ postgres = ["psycopg2-binary", "asyncpg"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "1b8d600e9296ce677dff8f41dbad84e8d12228dfd3981d849272d15ecbf19dfb"
+content-hash = "1c5d1ab60adc5d10926665f7587fb9dcea558bac440a7941daf0b0343d349df9"

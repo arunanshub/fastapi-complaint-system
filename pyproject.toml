@@ -24,6 +24,7 @@ boto3 = "^1.26.74"
 pyfa-converter = "^1.0.3.0"
 apiron = "^7.0.0"
 simplejson = "^3.18.3"
+tenacity = "^8.2.1"
 
 [tool.poetry.group.dev.dependencies]
 types-passlib = "^1.7.7.8"
