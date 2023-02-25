@@ -26,3 +26,10 @@ class FailedTransactionError(Exception):
     Exception class representing an error that occurs when a bank transaction
     fails.
     """
+
+
+class CancelledTransactionError(Exception):
+    """
+    Exception class representing an error that occurs when a bank transaction
+    has already been cancelled.
+    """

@@ -35,6 +35,9 @@ class WiseSDK(Service):
         path="/v1/accounts", default_method="POST"
     )
     create_transfer = JsonEndpoint(path="/v1/transfers", default_method="POST")
+    cancel_transfer = JsonEndpoint(
+        path="/v1/transfers/{transfer_id}/cancel", default_method="PUT"
+    )
     fund_transfer = JsonEndpoint(
         path="/v3/profiles/{profile_id}/transfers/{transfer_id}/payments",
         default_method="POST",
@@ -115,6 +118,17 @@ class WiseService:
         )
         transfer_resp = typing.cast("dict", transfer_resp)
         return typing.cast("int", transfer_resp["id"])
+
+    async def cancel_transfer(self, transfer_id: int) -> None:
+        try:
+            await run_in_threadpool(
+                self._wise.cancel_transfer,
+                transfer_id=transfer_id,
+            )
+        except HTTPError as e:
+            raise exc.CancelledTransactionError(
+                "Transaction has already been cancelled"
+            ) from e
 
     async def issue_transaction(
         self,
