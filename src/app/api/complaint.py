@@ -113,7 +113,8 @@ async def create_complaint(
     )
     assert db_complaint.id is not None
     transaction_in = TransactionCreate(
-        **wise_transaction.dict(), complaint_id=db_complaint.id
+        **wise_transaction.dict(),
+        complaint_id=db_complaint.id,
     )
     await transaction.create(db, obj_in=transaction_in)
     await db.refresh(db_complaint)
@@ -200,6 +201,7 @@ async def reject_complaint(
     complaint_id: int,
     db: AsyncSession = Depends(get_db),
     ses_client: SESService = Depends(get_ses),
+    wise_client: WiseService = Depends(get_wise),
 ) -> Complaint:
     try:
         db_complaint = await complaint.change_status_by_id(
@@ -213,13 +215,27 @@ async def reject_complaint(
             detail="Complaint does not exist",
         ) from e
 
+    assert db_complaint.id is not None
+    db_transaction = (
+        await transaction.query(db)
+        .filter_by_complaint_id(db_complaint.id)
+        .one()
+    )
+
+    try:
+        await wise_client.cancel_transfer(db_transaction.transfer_id)
+    except exc.CancelledTransactionError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Complaint has already been cancelled",
+        )
+
     db_user = await user.get(db, id=db_complaint.complainer_id)
     assert db_user is not None  # TODO: what if user is deleted?
     assert db_user.email is not None
-
     await run_in_threadpool(
         ses_client.send_email,
-        "Complaint approved!",
+        "Complaint rejected!",
         "Your claim has been rejected!",
         [db_user.email],
     )
