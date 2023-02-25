@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import IO, Iterable
+from typing import IO, AsyncIterable
 
 import boto3
 from botocore.exceptions import ClientError
+from fastapi.concurrency import run_in_threadpool
 
 from .. import exc
 from ..core import settings
@@ -21,14 +22,15 @@ class S3Service:
             aws_secret_access_key=self._secret,
         )
 
-    def upload_fileobj(
+    async def upload_fileobj(
         self,
         fileobj: IO[bytes],
         key: str,
         content_type: str,
     ) -> None:
         try:
-            self._s3.upload_fileobj(
+            await run_in_threadpool(
+                self._s3.upload_fileobj,
                 fileobj,
                 self._bucket,
                 key,
@@ -46,5 +48,5 @@ def _get_cached_s3_service() -> S3Service:
     return S3Service()
 
 
-def get_s3() -> Iterable[S3Service]:
+async def get_s3() -> AsyncIterable[S3Service]:
     yield _get_cached_s3_service()

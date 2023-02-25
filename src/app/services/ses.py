@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import typing
 from functools import lru_cache
-from typing import Iterable
+from typing import AsyncIterable
 
 import boto3
+from fastapi.concurrency import run_in_threadpool
 
 from ..core import settings
 
@@ -23,13 +24,14 @@ class SESService:
             aws_secret_access_key=self._secret,
         )
 
-    def send_email(
+    async def send_email(
         self,
         subject: str,
         text_data: str,
         to_addresses: list[EmailStr],
     ) -> None:
-        self._ses.send_email(
+        await run_in_threadpool(
+            self._ses.send_email,
             Source=settings.AWS_SES_EMAIL_SENDER,
             Destination={
                 "ToAddresses": to_addresses,
@@ -56,5 +58,5 @@ def _get_cached_ses_service() -> SESService:
     return SESService()
 
 
-def get_ses() -> Iterable[SESService]:
+async def get_ses() -> AsyncIterable[SESService]:
     yield _get_cached_ses_service()

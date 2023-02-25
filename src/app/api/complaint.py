@@ -12,7 +12,6 @@ from fastapi import (
     UploadFile,
     status,
 )
-from fastapi.concurrency import run_in_threadpool
 from pyfa_converter import FormDepends  # type: ignore[import]
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
@@ -86,12 +85,7 @@ async def create_complaint(
     # generate filename, upload photo and generate photo url
     extension = os.path.splitext(photo.filename)[1]
     filename = f"{uuid.uuid4()}{extension}"
-    await run_in_threadpool(
-        s3_client.upload_fileobj,
-        photo.file,
-        filename,
-        photo.content_type,
-    )
+    await s3_client.upload_fileobj(photo.file, filename, photo.content_type)
     photo_url = typing.cast("HttpUrl", s3_client.get_object_url(filename))
 
     # store the generated url in the database
@@ -182,11 +176,8 @@ async def approve_complaint(
     db_user = await user.get(db, id=db_complaint.complainer_id)
     assert db_user is not None  # TODO: what if user is deleted?
     assert db_user.email is not None
-    await run_in_threadpool(
-        ses_client.send_email,
-        "Complaint approved!",
-        "Your claim has been approved!",
-        [db_user.email],
+    await ses_client.send_email(
+        "Complaint approved!", "Your claim has been approved!", [db_user.email]
     )
 
     return db_complaint
@@ -233,11 +224,8 @@ async def reject_complaint(
     db_user = await user.get(db, id=db_complaint.complainer_id)
     assert db_user is not None  # TODO: what if user is deleted?
     assert db_user.email is not None
-    await run_in_threadpool(
-        ses_client.send_email,
-        "Complaint rejected!",
-        "Your claim has been rejected!",
-        [db_user.email],
+    await ses_client.send_email(
+        "Complaint rejected!", "Your claim has been rejected!", [db_user.email]
     )
 
     return db_complaint
