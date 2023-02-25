@@ -26,3 +26,6 @@ class CRUDTransaction(
     ) -> Transaction:
         del db, db_obj, obj_in
         raise NotImplementedError("Cannot update a transaction")
+
+
+transaction = CRUDTransaction(Transaction)
