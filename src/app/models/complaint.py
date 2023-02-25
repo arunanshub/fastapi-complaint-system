@@ -1,23 +1,13 @@
 # isort: dont-add-imports
 
-import typing
 from datetime import datetime  # noqa: TC003
 from typing import Optional
 
-from pydantic import HttpUrl, condecimal  # noqa: TC002
+from pydantic import HttpUrl  # noqa: TC002
 from sqlmodel import Column, Field, Relationship, SQLModel, Text, func
 
-from .base import SQLBase
+from .base import Monetary, SQLBase
 from .enums import ComplaintStatus
-
-if typing.TYPE_CHECKING:
-    from decimal import Decimal
-
-    class Monetary(Decimal):
-        ...
-
-else:
-    Monetary = condecimal(ge=0, max_digits=19, decimal_places=4)
 
 
 class ComplaintBase(SQLModel):
