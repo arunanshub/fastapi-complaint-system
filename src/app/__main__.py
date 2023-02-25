@@ -79,7 +79,6 @@ async def pre_start(max_tries: int, wait_seconds: int) -> None:
     )
     async def retrier() -> None:
         await main.check_services()
-        raise ValueError
 
     try:
         await retrier()
