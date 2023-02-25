@@ -95,6 +95,14 @@ python -m app create-admin \
 This will create an admin user in the database with the provided information.
 The created user will have the role of `ADMIN`.
 
+## Check if Everything is Functional
+
+To ensure everything is working properly, run this command:
+
+```bash
+python -m app pre-start
+```
+
 ## Run the Project
 
 To run the project, navigate to the root directory of the project and run the
