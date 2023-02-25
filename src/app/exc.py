@@ -19,3 +19,10 @@ class UploadFailedError(Exception):
     """
     Exception class representing an error that occurs when upload fails.
     """
+
+
+class FailedTransactionError(Exception):
+    """
+    Exception class representing an error that occurs when a bank transaction
+    fails.
+    """

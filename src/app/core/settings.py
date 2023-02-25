@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseSettings, EmailStr, Field, validator
+from pydantic import BaseSettings, EmailStr, Field, HttpUrl, validator
 from sqlalchemy.engine import make_url
 
 
@@ -25,6 +25,12 @@ class Settings(BaseSettings):
 
     #: the SES email sender
     AWS_SES_EMAIL_SENDER: EmailStr = Field(default=...)
+
+    #: The API endpoint of Wise
+    WISE_ENDPOINT: HttpUrl = Field(default=...)
+
+    #: Wise API token
+    WISE_TOKEN: str = Field(default=...)
 
     #: This URL is derived from ``DATABASE_URL`` and not from the environment.
     DATABASE_URL: str = Field(default=...)
