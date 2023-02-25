@@ -16,13 +16,15 @@ from fastapi.concurrency import run_in_threadpool
 from pyfa_converter import FormDepends  # type: ignore[import]
 from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
 
+from app import exc
+
 from ..api.deps import (
     get_current_admin,
     get_current_approver,
     get_current_complainer,
     get_current_user,
 )
-from ..crud import complaint, user
+from ..crud import complaint, transaction, user
 from ..database import get_db
 from ..exc import DoesNotExistError
 from ..models.complaint import (
@@ -32,9 +34,11 @@ from ..models.complaint import (
     ComplaintRead,
 )
 from ..models.enums import ComplaintStatus, Role
+from ..models.transaction import TransactionCreate
 from ..models.user import User  # noqa: TC002
 from ..services.s3 import S3Service, get_s3
 from ..services.ses import SESService, get_ses
+from ..services.wise import WiseService, get_wise
 
 if typing.TYPE_CHECKING:
     from pydantic import HttpUrl
@@ -67,6 +71,7 @@ async def create_complaint(
     photo: UploadFile,
     complaint_in: ComplaintCreateUser = FormDepends(ComplaintCreateUser),
     s3_client: S3Service = Depends(get_s3),
+    wise_client: WiseService = Depends(get_wise),
     db: AsyncSession = Depends(get_db),
     db_user: User = Depends(get_current_complainer),
 ) -> Complaint:
@@ -94,7 +99,25 @@ async def create_complaint(
         **complaint_in.dict(),
         photo_url=photo_url,
     )
-    return await complaint.create(db, obj_in=complaint_data, user=db_user)
+    db_complaint = await complaint.create(
+        db, obj_in=complaint_data, user=db_user
+    )
+    await db.refresh(db_user)
+
+    # create a transaction
+    assert db_user.iban is not None
+    wise_transaction = await wise_client.issue_transaction(
+        f"{db_user.first_name} {db_user.last_name}",
+        db_user.iban,
+        db_complaint.amount,
+    )
+    assert db_complaint.id is not None
+    transaction_in = TransactionCreate(
+        **wise_transaction.dict(), complaint_id=db_complaint.id
+    )
+    await transaction.create(db, obj_in=transaction_in)
+    await db.refresh(db_complaint)
+    return db_complaint
 
 
 @router.delete(
@@ -125,6 +148,7 @@ async def approve_complaint(
     complaint_id: int,
     db: AsyncSession = Depends(get_db),
     ses_client: SESService = Depends(get_ses),
+    wise_client: WiseService = Depends(get_wise),
 ) -> Complaint:
     try:
         db_complaint = await complaint.change_status_by_id(
@@ -138,10 +162,25 @@ async def approve_complaint(
             detail="Complaint does not exist",
         ) from e
 
+    # fund the transfer created in create_complaint
+    assert db_complaint.id is not None
+    db_transaction = (
+        await transaction.query(db)
+        .filter_by_complaint_id(db_complaint.id)
+        .one()
+    )
+    try:
+        await wise_client.fund_transfer(db_transaction.transfer_id)
+    except exc.FailedTransactionError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The transaction has already been approved",
+        )
+
+    # notify user about the transfer
     db_user = await user.get(db, id=db_complaint.complainer_id)
     assert db_user is not None  # TODO: what if user is deleted?
     assert db_user.email is not None
-
     await run_in_threadpool(
         ses_client.send_email,
         "Complaint approved!",
