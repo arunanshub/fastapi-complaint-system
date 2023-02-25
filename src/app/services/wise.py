@@ -6,13 +6,15 @@ from functools import lru_cache
 
 import simplejson as json
 from apiron import JsonEndpoint, Service
+from fastapi.concurrency import run_in_threadpool
+from pydantic import BaseModel
 from requests import HTTPError
 
 from .. import exc
 from ..core import settings
+from ..models.base import Monetary  # noqa: TC002
 
-if typing.TYPE_CHECKING:
-    from decimal import Decimal
+T = typing.TypeVar("T", bound="WiseService")
 
 
 class WiseSDK(Service):
@@ -39,6 +41,13 @@ class WiseSDK(Service):
     )
 
 
+class Transaction(BaseModel):
+    quote_id: uuid.UUID
+    transfer_id: int
+    target_account_id: int
+    amount: Monetary
+
+
 class WiseService:
     def __init__(self) -> None:
         self._wise = WiseSDK()
@@ -46,10 +55,16 @@ class WiseService:
 
     def get_profile_id(self) -> int:
         # wise returns two types of profiles: personal and business
-        _, business = typing.cast("list[dict]", self._wise.profiles())
-        return typing.cast("int", business["id"])
+        profile_resp = self._wise.profiles()
+        _, business = typing.cast("list[dict]", profile_resp)
+        self._profile_id = typing.cast("int", business["id"])
+        return self._profile_id
 
-    def create_quote(self, amount: Decimal) -> str:
+    @property
+    async def profile_id(self) -> int:
+        return self._profile_id
+
+    async def create_quote(self, amount: Monetary) -> str:
         """
         Creates a quote and returns the Quote ID as UUID.
         """
@@ -59,18 +74,19 @@ class WiseService:
             "targetAmount": amount,
         }
 
-        quote_resp = self._wise.create_authenticated_quote(
-            profile_id=self._profile_id,
+        quote_resp = await run_in_threadpool(
+            self._wise.create_authenticated_quote,
+            profile_id=await self.profile_id,
             data=json.dumps(quote_data),
         )
         quote_resp = typing.cast("dict", quote_resp)
         return typing.cast("str", quote_resp["id"])
 
-    def create_recipient_account(self, full_name: str, iban: str) -> int:
+    async def create_recipient_account(self, full_name: str, iban: str) -> int:
         recipient_data = {
             "currency": "EUR",
             "type": "iban",
-            "profile": self._profile_id,
+            "profile": await self.profile_id,
             "accountHolderName": full_name,
             "details": {
                 "legalType": "PRIVATE",
@@ -78,29 +94,52 @@ class WiseService:
             },
         }
 
-        recipient_resp = self._wise.create_recipient_account(
-            data=json.dumps(recipient_data)
+        recipient_resp = await run_in_threadpool(
+            self._wise.create_recipient_account,
+            data=json.dumps(recipient_data),
         )
         recipient_resp = typing.cast("dict", recipient_resp)
         return typing.cast("int", recipient_resp["id"])
 
-    def create_transfer(self, target_account_id: int, quote_uuid: str) -> int:
+    async def create_transfer(
+        self, target_account_id: int, quote_uuid: str
+    ) -> int:
         transfer_data = {
             "targetAccount": target_account_id,
             "quoteUuid": quote_uuid,
             "customerTransactionId": str(uuid.uuid4()),
         }
-        transfer_resp = self._wise.create_transfer(
-            data=json.dumps(transfer_data)
+        transfer_resp = await run_in_threadpool(
+            self._wise.create_transfer,
+            data=json.dumps(transfer_data),
         )
         transfer_resp = typing.cast("dict", transfer_resp)
         return typing.cast("int", transfer_resp["id"])
 
-    def fund_transfer(self, transfer_id: int) -> None:
+    async def issue_transaction(
+        self,
+        user_name: str,
+        iban: str,
+        amount: Monetary,
+    ) -> Transaction:
+        target_account_id = await self.create_recipient_account(
+            user_name, iban
+        )
+        quote_id = await self.create_quote(amount)
+        transfer_id = await self.create_transfer(target_account_id, quote_id)
+        return Transaction(
+            quote_id=uuid.UUID(quote_id),
+            transfer_id=transfer_id,
+            target_account_id=target_account_id,
+            amount=amount,
+        )
+
+    async def fund_transfer(self, transfer_id: int) -> None:
         transfer_data = {"type": "BALANCE"}
         try:
-            self._wise.fund_transfer(
-                profile_id=self._profile_id,
+            await run_in_threadpool(
+                self._wise.fund_transfer,
+                profile_id=await self.profile_id,
                 transfer_id=transfer_id,
                 data=json.dumps(transfer_data),
             )
@@ -118,5 +157,5 @@ def _get_cached_wise_service() -> WiseService:
     return WiseService()
 
 
-def get_wise() -> typing.Iterable[WiseService]:
+async def get_wise() -> typing.AsyncIterable[WiseService]:
     yield _get_cached_wise_service()
