@@ -9,10 +9,10 @@ if typing.TYPE_CHECKING:
 
 from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintUpdate
-from .base import CRUDBase, CRUDBaseQueryBuilder
+from .base import BaseQueryBuilder, CRUDBase
 
 
-class ComplaintQueryBuilder(CRUDBaseQueryBuilder[Complaint]):
+class ComplaintQueryBuilder(BaseQueryBuilder[Complaint]):
     def filter_by_user(self, user: User) -> ComplaintQueryBuilder:
         self.query = self.query.where(self.model.complainer_id == user.id)
         return self

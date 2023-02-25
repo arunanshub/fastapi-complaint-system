@@ -20,10 +20,10 @@ if typing.TYPE_CHECKING:
 ModelType = TypeVar("ModelType", bound=SQLBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=SQLModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=SQLModel)
-_T = TypeVar("_T", bound="CRUDBaseQueryBuilder")
+_T = TypeVar("_T", bound="BaseQueryBuilder")
 
 
-class CRUDBaseQueryBuilder(Generic[ModelType]):
+class BaseQueryBuilder(Generic[ModelType]):
     def __init__(self, model: type[ModelType], db: AsyncSession):
         self.db = db
         self.model = model
@@ -68,8 +68,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: type[ModelType]):
         self.model = model
 
-    def query(self, db: AsyncSession) -> CRUDBaseQueryBuilder[ModelType]:
-        return CRUDBaseQueryBuilder(self.model, db)
+    def query(self, db: AsyncSession) -> BaseQueryBuilder[ModelType]:
+        return BaseQueryBuilder(self.model, db)
 
     async def get(self, db: AsyncSession, *, id: int) -> ModelType | None:
         """Retrieves a single record from the database.

@@ -12,10 +12,10 @@ if typing.TYPE_CHECKING:
 from ..core import security
 from ..exc import DoesNotExistError
 from ..models.user import User, UserCreate, UserUpdate
-from .base import CRUDBase, CRUDBaseQueryBuilder
+from .base import BaseQueryBuilder, CRUDBase
 
 
-class UserQueryBuilder(CRUDBaseQueryBuilder[User]):
+class UserQueryBuilder(BaseQueryBuilder[User]):
     def filter_by_email(self, email: EmailStr) -> UserQueryBuilder:
         self.query = self.query.where(self.model.email == email)
         return self
