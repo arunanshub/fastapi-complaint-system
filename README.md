@@ -51,6 +51,10 @@ application. The important configuration options are as follows:
 
 - `AWS_SES_EMAIL_SENDER`: the ID that is used to send emails to users (**required**)
 
+- `WISE_ENDPOINT`: the wise endpoint to use. (**required**)
+
+- `WISE_TOKEN`: The Wise API token. (**required**)
+
 - `DATABASE_URL`: The URL to connect to the database. (**required**)
 
 - `ACCESS_TOKEN_EXPIRE_MINUTES`: The number of minutes an access token should
