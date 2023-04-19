@@ -61,14 +61,14 @@ trio = ["trio (>=0.16,<0.22)"]
 
 [[package]]
 name = "apiron"
-version = "7.0.0"
+version = "7.1.0"
 description = "apiron helps you cook a tasty client for RESTful APIs. Just don't wash it with SOAP."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "apiron-7.0.0-py3-none-any.whl", hash = "sha256:0fc764bc5133b42b2774636331723476448b71c4535f05ca4b9186fb57e28b81"},
-    {file = "apiron-7.0.0.tar.gz", hash = "sha256:1afa90169b99edcef7653354e2d63654af3949077ca2558774f43da56f489f87"},
+    {file = "apiron-7.1.0-py3-none-any.whl", hash = "sha256:686608c8da95dbdb0511fc39a91c95836238a9754bb87c910e6859b24f3aca59"},
+    {file = "apiron-7.1.0.tar.gz", hash = "sha256:27b3f5cd1e46f14d4cff60919e136f5af57993508fb7bebcbaaf5ba0e057b099"},
 ]
 
 [package.dependencies]
