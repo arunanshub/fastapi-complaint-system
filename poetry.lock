@@ -61,14 +61,14 @@ trio = ["trio (>=0.16,<0.22)"]
 
 [[package]]
 name = "apiron"
-version = "7.1.0"
+version = "7.1.0.post1"
 description = "apiron helps you cook a tasty client for RESTful APIs. Just don't wash it with SOAP."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "apiron-7.1.0-py3-none-any.whl", hash = "sha256:686608c8da95dbdb0511fc39a91c95836238a9754bb87c910e6859b24f3aca59"},
-    {file = "apiron-7.1.0.tar.gz", hash = "sha256:27b3f5cd1e46f14d4cff60919e136f5af57993508fb7bebcbaaf5ba0e057b099"},
+    {file = "apiron-7.1.0.post1-py3-none-any.whl", hash = "sha256:73cde653b07c1c70657d012d6c610a13813033bb053634e36d7f8f9be4b91c36"},
+    {file = "apiron-7.1.0.post1.tar.gz", hash = "sha256:d7efd99bf2480f24d20c5067b18fb057b7f66e6c9810415f9c6f409705167a2a"},
 ]
 
 [package.dependencies]
@@ -612,14 +612,14 @@ crt = ["awscrt (==0.16.9)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.29.118"
+version = "1.29.123"
 description = "Type annotations and code completion for botocore"
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "botocore_stubs-1.29.118-py3-none-any.whl", hash = "sha256:b0ce0670c7e69a6282dbb0daaf2acf25467c4950217035b02ed2aad4ef27782e"},
-    {file = "botocore_stubs-1.29.118.tar.gz", hash = "sha256:221d031f8c3546bdd422de603dbb13dde4b91c60dc1fb0ca0288dce074b95f7d"},
+    {file = "botocore_stubs-1.29.123-py3-none-any.whl", hash = "sha256:c23e5202cf3580e7d349ac37618ac9d119bf26884413751d20f70aa4664e4c62"},
+    {file = "botocore_stubs-1.29.123.tar.gz", hash = "sha256:5e7873cfc07c705efb546683f5914fece0e5845dd83e62657b3ae034cc73740b"},
 ]
 
 [package.dependencies]
@@ -1457,14 +1457,14 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pyfa-converter"
-version = "1.0.3.0"
+version = "1.0.4.0"
 description = "Pydantic to fastapi model converter."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyfa-converter-1.0.3.0.tar.gz", hash = "sha256:3f72fdaa9fc28d4e5e185eb4b3b16da3569cb399a8eca4fa0430f7809eb67f70"},
-    {file = "pyfa_converter-1.0.3.0-py3-none-any.whl", hash = "sha256:7933478447802cddad681dc177e9be96e100a9c1a9d1686b8f0fb5e996259ed7"},
+    {file = "pyfa_converter-1.0.4.0-py3-none-any.whl", hash = "sha256:569b2642dd2ddb3cab34f8560239b7f4b3830547ae38cd7f61f1e05c41f47915"},
+    {file = "pyfa_converter-1.0.4.0.tar.gz", hash = "sha256:629816a82260f176c09a0ff1a9788281ef863b3418b8a8acfc771cfbdb19dae0"},
 ]
 
 [package.dependencies]
@@ -1623,14 +1623,14 @@ files = [
 
 [[package]]
 name = "requests"
-version = "2.28.2"
+version = "2.29.0"
 description = "Python HTTP for Humans."
 category = "main"
 optional = false
-python-versions = ">=3.7, <4"
+python-versions = ">=3.7"
 files = [
-    {file = "requests-2.28.2-py3-none-any.whl", hash = "sha256:64299f4909223da747622c030b781c0d7811e359c37124b4bd368fb8c6518baa"},
-    {file = "requests-2.28.2.tar.gz", hash = "sha256:98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"},
+    {file = "requests-2.29.0-py3-none-any.whl", hash = "sha256:e8f3c9be120d3333921d213eef078af392fba3933ab7ed2d1cba3b56f2568c3b"},
+    {file = "requests-2.29.0.tar.gz", hash = "sha256:f2e34a75f4749019bb0e3effb66683630e4ffeaf75819fb51bebef1bf5aef059"},
 ]
 
 [package.dependencies]
@@ -1959,14 +1959,14 @@ files = [
 
 [[package]]
 name = "types-requests"
-version = "2.28.11.17"
+version = "2.29.0.0"
 description = "Typing stubs for requests"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-requests-2.28.11.17.tar.gz", hash = "sha256:0d580652ce903f643f8c3b494dd01d29367ea57cea0c7ad7f65cf3169092edb0"},
-    {file = "types_requests-2.28.11.17-py3-none-any.whl", hash = "sha256:cc1aba862575019306b2ed134eb1ea994cab1c887a22e18d3383e6dd42e9789b"},
+    {file = "types-requests-2.29.0.0.tar.gz", hash = "sha256:c86f4a955d943d2457120dbe719df24ef0924e11177164d10a0373cf311d7b4d"},
+    {file = "types_requests-2.29.0.0-py3-none-any.whl", hash = "sha256:4cf6e323e856c779fbe8815bb977a5bf5d6c5034713e4c17ff2a9a20610f5b27"},
 ]
 
 [package.dependencies]
@@ -2001,14 +2001,14 @@ files = [
 
 [[package]]
 name = "types-urllib3"
-version = "1.26.25.10"
+version = "1.26.25.12"
 description = "Typing stubs for urllib3"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-urllib3-1.26.25.10.tar.gz", hash = "sha256:c44881cde9fc8256d05ad6b21f50c4681eb20092552351570ab0a8a0653286d6"},
-    {file = "types_urllib3-1.26.25.10-py3-none-any.whl", hash = "sha256:12c744609d588340a07e45d333bf870069fc8793bcf96bae7a96d4712a42591d"},
+    {file = "types-urllib3-1.26.25.12.tar.gz", hash = "sha256:a1557355ce8d350a555d142589f3001903757d2d36c18a66f588d9659bbc917d"},
+    {file = "types_urllib3-1.26.25.12-py3-none-any.whl", hash = "sha256:3ba3d3a8ee46e0d5512c6bd0594da4f10b2584b47a470f8422044a2ab462f1df"},
 ]
 
 [[package]]
