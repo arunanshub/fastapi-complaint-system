@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm  # noqa: TC002
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import EmailStr
-from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
+from typing_extensions import Annotated
 
 from ..core import security
 from ..crud import user
-from ..database import get_db
+from ..database import Database
 from ..models.token import Token
 
 router = APIRouter()
@@ -15,8 +15,8 @@ router = APIRouter()
 
 @router.post("/token")
 async def login_for_token(
-    form: OAuth2PasswordRequestForm = Depends(),
-    db: AsyncSession = Depends(get_db),
+    db: Database,
+    form: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
     db_user = await user.authenticate(
         db,

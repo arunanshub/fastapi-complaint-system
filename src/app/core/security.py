@@ -57,7 +57,8 @@ def verify_access_token(access_token: str) -> token.TokenPayload:
         )
         return token.TokenPayload(**payload)
     except (jwt.InvalidTokenError, ValidationError) as e:
-        raise ValueError("The token data is invalid") from e
+        msg = "The token data is invalid"
+        raise ValueError(msg) from e
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

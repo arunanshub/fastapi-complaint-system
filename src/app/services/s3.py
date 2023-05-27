@@ -37,7 +37,8 @@ class S3Service:
                 ExtraArgs={"ACL": "public-read", "ContentType": content_type},
             )
         except ClientError as e:
-            raise exc.UploadFailedError("failed to upload file object") from e
+            msg = "failed to upload file object"
+            raise exc.UploadFailedError(msg) from e
 
     def get_object_url(self, key: str) -> str:
         return f"https://{self._bucket}.s3.amazonaws.com/{key}"

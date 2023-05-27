@@ -126,9 +126,8 @@ class WiseService:
                 transfer_id=transfer_id,
             )
         except HTTPError as e:
-            raise exc.CancelledTransactionError(
-                "Transaction has already been cancelled"
-            ) from e
+            msg = "Transaction has already been cancelled"
+            raise exc.CancelledTransactionError(msg) from e
 
     async def issue_transaction(
         self,
@@ -160,9 +159,8 @@ class WiseService:
         except HTTPError as e:
             error_resp = e.response.json()
             if error_resp != "COMPLETED":
-                raise exc.FailedTransactionError(
-                    f"Transaction with id {transfer_id} failed"
-                ) from e
+                msg = f"Transaction with id {transfer_id} failed"
+                raise exc.FailedTransactionError(msg) from e
             raise e
 
 

@@ -33,7 +33,8 @@ class CRUDTransaction(
         obj_in: TransactionUpdate,
     ) -> Transaction:
         del db, db_obj, obj_in
-        raise NotImplementedError("Cannot update a transaction")
+        msg = "Cannot update a transaction"
+        raise NotImplementedError(msg)
 
     def query(self, db: AsyncSession) -> TransactionQueryBuilder:
         return TransactionQueryBuilder(self.model, db)

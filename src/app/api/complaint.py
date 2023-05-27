@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import os
 import typing
 import uuid
+from pathlib import Path
 
 from fastapi import (
     APIRouter,
@@ -13,18 +13,16 @@ from fastapi import (
     status,
 )
 from pyfa_converter import FormDepends  # type: ignore[import]
-from sqlmodel.ext.asyncio.session import AsyncSession  # noqa: TC002
+from typing_extensions import Annotated
 
-from app import exc
-
+from .. import exc
 from ..api.deps import (
     get_current_admin,
     get_current_approver,
-    get_current_complainer,
     get_current_user,
 )
 from ..crud import complaint, transaction, user
-from ..database import get_db
+from ..database import Database
 from ..exc import DoesNotExistError
 from ..models.complaint import (
     Complaint,
@@ -44,14 +42,19 @@ if typing.TYPE_CHECKING:
 
 router = APIRouter()
 
+CurrentUser = Annotated[User, Depends(get_current_user)]
+SESClient = Annotated[SESService, Depends(get_ses)]
+WiseClient = Annotated[WiseService, Depends(get_wise)]
+S3Client = Annotated[S3Service, Depends(get_s3)]
+
 
 @router.get("/", response_model=list[ComplaintRead])
 async def get_complaints(
+    limit: Annotated[int, Query(100, ge=0, le=100)],
+    skip: Annotated[int, Query(0, ge=0)],
+    db: Database,
+    db_user: CurrentUser,
     complaint_status: ComplaintStatus | None = None,
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=0, le=100),
-    db: AsyncSession = Depends(get_db),
-    db_user: User = Depends(get_current_user),
 ) -> list[Complaint]:
     query = complaint.query(db).limit(limit).skip(skip)
     if complaint_status is not None:
@@ -68,11 +71,13 @@ async def get_complaints(
 )
 async def create_complaint(
     photo: UploadFile,
-    complaint_in: ComplaintCreateUser = FormDepends(ComplaintCreateUser),
-    s3_client: S3Service = Depends(get_s3),
-    wise_client: WiseService = Depends(get_wise),
-    db: AsyncSession = Depends(get_db),
-    db_user: User = Depends(get_current_complainer),
+    db: Database,
+    db_user: CurrentUser,
+    s3_client: S3Client,
+    wise_client: WiseClient,
+    complaint_in: Annotated[
+        ComplaintCreateUser, FormDepends(ComplaintCreateUser)
+    ],
 ) -> Complaint:
     # check if uploaded file is valid
     assert photo.filename is not None
@@ -83,7 +88,7 @@ async def create_complaint(
         )
 
     # generate filename, upload photo and generate photo url
-    extension = os.path.splitext(photo.filename)[1]
+    extension = Path(photo.filename).suffix
     filename = f"{uuid.uuid4()}{extension}"
     await s3_client.upload_fileobj(photo.file, filename, photo.content_type)
     photo_url = typing.cast("HttpUrl", s3_client.get_object_url(filename))
@@ -121,10 +126,7 @@ async def create_complaint(
     dependencies=[Depends(get_current_admin)],
     response_model=None,
 )
-async def delete_complaint(
-    complaint_id: int,
-    db: AsyncSession = Depends(get_db),
-) -> None:
+async def delete_complaint(complaint_id: int, db: Database) -> None:
     try:
         await complaint.delete(db, id=complaint_id)
     except DoesNotExistError as e:
@@ -141,9 +143,9 @@ async def delete_complaint(
 )
 async def approve_complaint(
     complaint_id: int,
-    db: AsyncSession = Depends(get_db),
-    ses_client: SESService = Depends(get_ses),
-    wise_client: WiseService = Depends(get_wise),
+    db: Database,
+    ses_client: SESClient,
+    wise_client: WiseClient,
 ) -> Complaint:
     try:
         db_complaint = await complaint.change_status_by_id(
@@ -166,11 +168,11 @@ async def approve_complaint(
     )
     try:
         await wise_client.fund_transfer(db_transaction.transfer_id)
-    except exc.FailedTransactionError:
+    except exc.FailedTransactionError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The transaction has already been approved",
-        )
+        ) from e
 
     # notify user about the transfer
     db_user = await user.get(db, id=db_complaint.complainer_id)
@@ -190,9 +192,9 @@ async def approve_complaint(
 )
 async def reject_complaint(
     complaint_id: int,
-    db: AsyncSession = Depends(get_db),
-    ses_client: SESService = Depends(get_ses),
-    wise_client: WiseService = Depends(get_wise),
+    db: Database,
+    ses_client: SESClient,
+    wise_client: WiseClient,
 ) -> Complaint:
     try:
         db_complaint = await complaint.change_status_by_id(
@@ -215,11 +217,11 @@ async def reject_complaint(
 
     try:
         await wise_client.cancel_transfer(db_transaction.transfer_id)
-    except exc.CancelledTransactionError:
+    except exc.CancelledTransactionError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Complaint has already been cancelled",
-        )
+        ) from e
 
     db_user = await user.get(db, id=db_complaint.complainer_id)
     assert db_user is not None  # TODO: what if user is deleted?

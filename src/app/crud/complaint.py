@@ -4,8 +4,9 @@ import typing
 
 if typing.TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
-    from ..models.user import User
+
     from ..models.enums import ComplaintStatus
+    from ..models.user import User
 
 from ..exc import DoesNotExistError
 from ..models.complaint import Complaint, ComplaintCreate, ComplaintUpdate
@@ -42,7 +43,8 @@ class CRUDComplaint(CRUDBase[Complaint, ComplaintCreate, ComplaintUpdate]):
     ) -> Complaint:
         db_complaint = await self.get(db, id=id)
         if db_complaint is None:
-            raise DoesNotExistError("complaint does not exist")
+            msg = "complaint does not exist"
+            raise DoesNotExistError(msg)
         complaint_in = ComplaintUpdate(status=status)
         return await self.update(db, db_obj=db_complaint, obj_in=complaint_in)
 

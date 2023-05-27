@@ -24,7 +24,7 @@ _T = TypeVar("_T", bound="BaseQueryBuilder")
 
 
 class BaseQueryBuilder(Generic[ModelType]):
-    def __init__(self, model: type[ModelType], db: AsyncSession):
+    def __init__(self, model: type[ModelType], db: AsyncSession) -> None:
         self.db = db
         self.model = model
         self.query = select(self.model).order_by(self.model.id)
@@ -65,7 +65,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     UpdateSchemaType is the schema for the update operation.
     """
 
-    def __init__(self, model: type[ModelType]):
+    def __init__(self, model: type[ModelType]) -> None:
         self.model = model
 
     def query(self, db: AsyncSession) -> BaseQueryBuilder[ModelType]:
@@ -146,7 +146,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         try:
             await db.commit()
         except IntegrityError as e:
-            raise NotUniqueError("field(s) must be unique") from e
+            msg = "field(s) must be unique"
+            raise NotUniqueError(msg) from e
         await db.refresh(db_obj)
         return db_obj
 
@@ -194,6 +195,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         obj = await db.get(self.model, id)
         if obj is None:
-            raise DoesNotExistError("the record does not exist")
+            msg = "the record does not exist"
+            raise DoesNotExistError(msg)
         await db.delete(obj)
         await db.commit()

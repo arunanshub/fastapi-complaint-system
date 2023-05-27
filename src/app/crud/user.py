@@ -5,8 +5,9 @@ import typing
 
 if typing.TYPE_CHECKING:
     from pydantic import EmailStr
-    from sqlmodel.ext.asyncio.session import AsyncSession
     from sqlmodel import SQLModel
+    from sqlmodel.ext.asyncio.session import AsyncSession
+
     from ..models.enums import Role
 
 from ..core import security
@@ -146,7 +147,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         """
         db_obj = await self.get(db, id=id)
         if db_obj is None:
-            raise DoesNotExistError("The user does not exist")
+            msg = "The user does not exist"
+            raise DoesNotExistError(msg)
         db_obj.role = role
         return await self.add_record(db, db_obj=db_obj)
 
