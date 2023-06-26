@@ -59,13 +59,13 @@ trio = ["trio (<0.22)"]
 
 [[package]]
 name = "apiron"
-version = "7.1.0.post2"
+version = "7.1.0.post3"
 description = "apiron helps you cook a tasty client for RESTful APIs. Just don't wash it with SOAP."
 optional = false
 python-versions = "*"
 files = [
-    {file = "apiron-7.1.0.post2-py3-none-any.whl", hash = "sha256:d8f4d235d77ea58c41307990fa0871a0c680c1e6da1bbe7375fb336ce92e18c2"},
-    {file = "apiron-7.1.0.post2.tar.gz", hash = "sha256:36990c590231b8c7626c190468c6100b5ac093fcde487d211513e5ac69cc9ffb"},
+    {file = "apiron-7.1.0.post3-py3-none-any.whl", hash = "sha256:1e959078a2033343a468e76d2fb2b0d304a3ae10b248258e6e55b5a96416a9a7"},
+    {file = "apiron-7.1.0.post3.tar.gz", hash = "sha256:ce80f4aa02bb87a9bce4a91ee6fda6a265c2e65b00dfc1cdb1aa7e7f2abf5040"},
 ]
 
 [package.dependencies]
@@ -607,13 +607,13 @@ crt = ["awscrt (==0.16.9)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.29.155"
+version = "1.29.160"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "botocore_stubs-1.29.155-py3-none-any.whl", hash = "sha256:cdc5305cf702dc28f6b7ace4a427024dd6ff2fd5bacb4dee07c993c82d977f99"},
-    {file = "botocore_stubs-1.29.155.tar.gz", hash = "sha256:01350d149bfa07fdb84c09d44ba0263db714c1a918c775b7bfeddbc083d55779"},
+    {file = "botocore_stubs-1.29.160-py3-none-any.whl", hash = "sha256:a0035fd040e82354194810484c3383ae31e947e5876f795b25c221ce9d91c952"},
+    {file = "botocore_stubs-1.29.160.tar.gz", hash = "sha256:3cf41d6395f17f52dce5a556028903a9cf2b848fda8f24fa797b3b8e85a680de"},
 ]
 
 [package.dependencies]
