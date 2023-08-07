@@ -614,13 +614,13 @@ crt = ["awscrt (==0.16.26)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.31.15"
+version = "1.31.20"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "botocore_stubs-1.31.15-py3-none-any.whl", hash = "sha256:5dab719199319de5e1fbc35d904abffdf7fde05353edc49577d56a9bc61ac507"},
-    {file = "botocore_stubs-1.31.15.tar.gz", hash = "sha256:2415b5c41d51562be1f98ceedc0dc685a3268d77eddc6983017e943c39cfe939"},
+    {file = "botocore_stubs-1.31.20-py3-none-any.whl", hash = "sha256:4608756e770398104e5577b9dbc90654c2bebf39d72aaf28536933dabe5eaf0b"},
+    {file = "botocore_stubs-1.31.20.tar.gz", hash = "sha256:4aa97c672a9ce162363bf177d003bd715c06a86f9fb69353515cc1ea00b4f163"},
 ]
 
 [package.dependencies]
@@ -1221,13 +1221,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.28.15.post1"
-description = "Type annotations for boto3.S3 1.28.15 service generated with mypy-boto3-builder 7.16.2"
+version = "1.28.19"
+description = "Type annotations for boto3.S3 1.28.19 service generated with mypy-boto3-builder 7.17.2"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mypy-boto3-s3-1.28.15.post1.tar.gz", hash = "sha256:65502be825789fd16e4cacf10aecd6408554b60ae5d261be60fd46bee69d8592"},
-    {file = "mypy_boto3_s3-1.28.15.post1-py3-none-any.whl", hash = "sha256:2e7d26fd2b56a13843afdba88576185aaa16aa7493f02576e3e94337be29f56c"},
+    {file = "mypy-boto3-s3-1.28.19.tar.gz", hash = "sha256:b8104b191924d8672068d21d748c0f8ae0b0e1950324cb315ec8a1ceed9d23ac"},
+    {file = "mypy_boto3_s3-1.28.19-py3-none-any.whl", hash = "sha256:d3759a8fb004f482565904d788d844eeccf3e03b8fa1b96a0f82ba1527ef4022"},
 ]
 
 [package.dependencies]
@@ -1235,13 +1235,13 @@ typing-extensions = {version = ">=4.1.0", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "mypy-boto3-ses"
-version = "1.28.15.post1"
-description = "Type annotations for boto3.SES 1.28.15 service generated with mypy-boto3-builder 7.16.2"
+version = "1.28.16"
+description = "Type annotations for boto3.SES 1.28.16 service generated with mypy-boto3-builder 7.17.1"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mypy-boto3-ses-1.28.15.post1.tar.gz", hash = "sha256:4be8ba2fc4dda97d86720dffa9d4799d55f67d8e30d03e03dc570f019e199dbe"},
-    {file = "mypy_boto3_ses-1.28.15.post1-py3-none-any.whl", hash = "sha256:ba3aea1d1562c991ad5976825b7ddc53618a846dcf3bd92eaf338a012c85a18e"},
+    {file = "mypy-boto3-ses-1.28.16.tar.gz", hash = "sha256:f1869c2e86cb9766bf84acd5e27fd92e3a2921b5feb5a2f72b46a038471244aa"},
+    {file = "mypy_boto3_ses-1.28.16-py3-none-any.whl", hash = "sha256:1ee3de51ed145a2b7667d69a967983a5105fbd3e0aa6489e1734bb58cfe0af5a"},
 ]
 
 [package.dependencies]
@@ -1450,13 +1450,13 @@ python-multipart = ">=0.0.5,<0.0.6"
 
 [[package]]
 name = "pygments"
-version = "2.15.1"
+version = "2.16.1"
 description = "Pygments is a syntax highlighting package written in Python."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "Pygments-2.15.1-py3-none-any.whl", hash = "sha256:db2db3deb4b4179f399a09054b023b6a586b76499d36965813c71aa8ed7b5fd1"},
-    {file = "Pygments-2.15.1.tar.gz", hash = "sha256:8ace4d3c1dd481894b2005f560ead0f9f19ee64fe983366be1a21e171d12775c"},
+    {file = "Pygments-2.16.1-py3-none-any.whl", hash = "sha256:13fc09fa63bc8d8671a6d247e1eb303c4b343eaee81d861f3404db2935653692"},
+    {file = "Pygments-2.16.1.tar.gz", hash = "sha256:1daff0494820c69bc8941e407aa20f577374ee88364ee10a98fdbe0aece96e29"},
 ]
 
 [package.extras]
