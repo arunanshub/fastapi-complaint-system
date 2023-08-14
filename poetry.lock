@@ -614,13 +614,13 @@ crt = ["awscrt (==0.16.26)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.31.20"
+version = "1.31.23"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "botocore_stubs-1.31.20-py3-none-any.whl", hash = "sha256:4608756e770398104e5577b9dbc90654c2bebf39d72aaf28536933dabe5eaf0b"},
-    {file = "botocore_stubs-1.31.20.tar.gz", hash = "sha256:4aa97c672a9ce162363bf177d003bd715c06a86f9fb69353515cc1ea00b4f163"},
+    {file = "botocore_stubs-1.31.23-py3-none-any.whl", hash = "sha256:7120fbe31fb619b57d991bc11c722ca6f9a8d434214942e9cd1559f883d14cc3"},
+    {file = "botocore_stubs-1.31.23.tar.gz", hash = "sha256:bf1e7130f47ab20087b59b4bebb4d21498bfa5fbd097aa0e8a580ddb18406746"},
 ]
 
 [package.dependencies]
@@ -825,13 +825,13 @@ files = [
 
 [[package]]
 name = "dnspython"
-version = "2.4.1"
+version = "2.4.2"
 description = "DNS toolkit"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "dnspython-2.4.1-py3-none-any.whl", hash = "sha256:5b7488477388b8c0b70a8ce93b227c5603bc7b77f1565afe8e729c36c51447d7"},
-    {file = "dnspython-2.4.1.tar.gz", hash = "sha256:c33971c79af5be968bb897e95c2448e11a645ee84d93b265ce0b7aabe5dfdca8"},
+    {file = "dnspython-2.4.2-py3-none-any.whl", hash = "sha256:57c6fbaaeaaf39c891292012060beb141791735dbb4004798328fc2c467402d8"},
+    {file = "dnspython-2.4.2.tar.gz", hash = "sha256:8dcfae8c7460a2f84b4072e26f1c9f4101ca20c071649cb7c34e8b6a93d58984"},
 ]
 
 [package.extras]
@@ -1068,13 +1068,13 @@ testing = ["flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pyfakefs
 
 [[package]]
 name = "importlib-resources"
-version = "6.0.0"
+version = "6.0.1"
 description = "Read resources from Python packages"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "importlib_resources-6.0.0-py3-none-any.whl", hash = "sha256:d952faee11004c045f785bb5636e8f885bed30dc3c940d5d42798a2a4541c185"},
-    {file = "importlib_resources-6.0.0.tar.gz", hash = "sha256:4cf94875a8368bd89531a756df9a9ebe1f150e0f885030b461237bc7f2d905f2"},
+    {file = "importlib_resources-6.0.1-py3-none-any.whl", hash = "sha256:134832a506243891221b88b4ae1213327eea96ceb4e407a00d790bb0626f45cf"},
+    {file = "importlib_resources-6.0.1.tar.gz", hash = "sha256:4359457e42708462b9626a04657c6208ad799ceb41e5c58c57ffa0e6a098a5d4"},
 ]
 
 [package.dependencies]
@@ -1230,13 +1230,13 @@ typing-extensions = {version = ">=4.1.0", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "mypy-boto3-ses"
-version = "1.28.16"
-description = "Type annotations for boto3.SES 1.28.16 service generated with mypy-boto3-builder 7.17.1"
+version = "1.28.25"
+description = "Type annotations for boto3.SES 1.28.25 service generated with mypy-boto3-builder 7.17.2"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mypy-boto3-ses-1.28.16.tar.gz", hash = "sha256:f1869c2e86cb9766bf84acd5e27fd92e3a2921b5feb5a2f72b46a038471244aa"},
-    {file = "mypy_boto3_ses-1.28.16-py3-none-any.whl", hash = "sha256:1ee3de51ed145a2b7667d69a967983a5105fbd3e0aa6489e1734bb58cfe0af5a"},
+    {file = "mypy-boto3-ses-1.28.25.tar.gz", hash = "sha256:169b36ebf1fe38bfa2ca3ba016e72dcbdf027ff0ee16fa888d6548ac58c48940"},
+    {file = "mypy_boto3_ses-1.28.25-py3-none-any.whl", hash = "sha256:62dbccc990402e3e36af049d0403cdfb15ade18c34f7ec6e140bcb30ec62379d"},
 ]
 
 [package.dependencies]
@@ -1887,24 +1887,24 @@ files = [
 
 [[package]]
 name = "types-awscrt"
-version = "0.17.0"
+version = "0.18.0"
 description = "Type annotations and code completion for awscrt"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "types_awscrt-0.17.0-py3-none-any.whl", hash = "sha256:278c1a913098e226769cd28dc37643a2f360907353a7e8918e1bcdf93d4e34f2"},
-    {file = "types_awscrt-0.17.0.tar.gz", hash = "sha256:4214783a747af900a5f98ec020d52ecae5910b470fd636813637a45b82a97516"},
+    {file = "types_awscrt-0.18.0-py3-none-any.whl", hash = "sha256:e46cd40a6a2314ced06b955663f1d58cd1eb6e1a9a7cc7e51025b9761ab21ab4"},
+    {file = "types_awscrt-0.18.0.tar.gz", hash = "sha256:c0293b1d149df839930d37bd50e304e8fab29ff92a252a02ebea49cd6e300f99"},
 ]
 
 [[package]]
 name = "types-passlib"
-version = "1.7.7.12"
+version = "1.7.7.13"
 description = "Typing stubs for passlib"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-passlib-1.7.7.12.tar.gz", hash = "sha256:6abbf2400a8f1cba48639753e3a034af507a765489bb070974d7f68d9ceef883"},
-    {file = "types_passlib-1.7.7.12-py3-none-any.whl", hash = "sha256:7a4df64b53c2746f804aa29fb361974e5894e0df30ff18cf60b9518696ffc9d3"},
+    {file = "types-passlib-1.7.7.13.tar.gz", hash = "sha256:f152639f1f2103d7f59a56e2aec5f9398a75a80830991d0d68aac5c2b9c32a77"},
+    {file = "types_passlib-1.7.7.13-py3-none-any.whl", hash = "sha256:414b5ee9c88313357c9261cfcf816509b1e8e4673f0796bd61e9ef249f6fe076"},
 ]
 
 [[package]]
