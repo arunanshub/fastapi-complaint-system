@@ -1603,19 +1603,19 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
 name = "pyfa-converter"
-version = "1.0.4.1"
+version = "1.0.5.0"
 description = "Pydantic to fastapi model converter."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyfa_converter-1.0.4.1-py3-none-any.whl", hash = "sha256:a88544e6d6ff4905cb8105657a4e601cbc227f72e32066575d3442bbe2000aff"},
-    {file = "pyfa_converter-1.0.4.1.tar.gz", hash = "sha256:99a3c8fa95c44ed91119bf700cb030adb3dba93f13ad94dd1d3b1fba9424b83b"},
+    {file = "pyfa_converter-1.0.5.0-py3-none-any.whl", hash = "sha256:559fbbd57a10b0819410ae078dc04fae2a0e41fdfacc5ac7cc4f6121fcfaeaeb"},
+    {file = "pyfa_converter-1.0.5.0.tar.gz", hash = "sha256:feada234adc0164a863d591810cbacbfefd1c3b89cbed62d7e6805012d83e4c1"},
 ]
 
 [package.dependencies]
 fastapi = ">=0.65"
 pydantic = ">=1.6"
-python-multipart = ">=0.0.5,<0.0.6"
+python-multipart = ">=0.0.5"
 
 [[package]]
 name = "pygments"
@@ -1699,16 +1699,17 @@ cli = ["click (>=5.0)"]
 
 [[package]]
 name = "python-multipart"
-version = "0.0.5"
+version = "0.0.7"
 description = "A streaming multipart parser for Python"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 files = [
-    {file = "python-multipart-0.0.5.tar.gz", hash = "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"},
+    {file = "python_multipart-0.0.7-py3-none-any.whl", hash = "sha256:b1fef9a53b74c795e2347daac8c54b252d9e0df9c619712691c1cc8021bd3c49"},
+    {file = "python_multipart-0.0.7.tar.gz", hash = "sha256:288a6c39b06596c1b988bb6794c6fbc80e6c369e35e5062637df256bee0c9af9"},
 ]
 
-[package.dependencies]
-six = ">=1.4.0"
+[package.extras]
+dev = ["atomicwrites (==1.2.1)", "attrs (==19.2.0)", "coverage (==6.5.0)", "hatch", "invoke (==2.2.0)", "more-itertools (==4.3.0)", "pbr (==4.3.0)", "pluggy (==1.0.0)", "py (==1.11.0)", "pytest (==7.2.0)", "pytest-cov (==4.0.0)", "pytest-timeout (==2.1.0)", "pyyaml (==5.1)"]
 
 [[package]]
 name = "pyyaml"
@@ -2454,4 +2455,4 @@ postgres = ["asyncpg", "psycopg2-binary"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "5004e0a07f96363145e05e5bede153330791c52459bab8437c412edb6f491f95"
+content-hash = "53ac81b6f94a1eb86088f831363cb896c6b3879f74d7fa06227479f7869acc40"
