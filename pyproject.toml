@@ -12,7 +12,7 @@ fastapi = "^0.111.0"
 sqlmodel = "^0.0.18"
 alembic = "^1.9.3"
 aiosqlite = "^0.20.0"
-uvicorn = {extras = ["standard"], version = "^0.29.0"}
+uvicorn = {extras = ["standard"], version = "^0.30.0"}
 pydantic = {extras = ["dotenv", "email"], version = "^2.0.0"}
 passlib = {extras = ["argon2"], version = "^1.7.4"}
 pyjwt = "^2.6.0"
