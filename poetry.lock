@@ -697,8 +697,8 @@ files = [
 jmespath = ">=0.7.1,<2.0.0"
 python-dateutil = ">=2.1,<3.0.0"
 urllib3 = [
-    {version = ">=1.25.4,<2.2.0 || >2.2.0,<3", markers = "python_version >= \"3.10\""},
     {version = ">=1.25.4,<1.27", markers = "python_version < \"3.10\""},
+    {version = ">=1.25.4,<2.2.0 || >2.2.0,<3", markers = "python_version >= \"3.10\""},
 ]
 
 [package.extras]
@@ -706,13 +706,13 @@ crt = ["awscrt (==0.22.0)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.35.29"
+version = "1.35.34"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore_stubs-1.35.29-py3-none-any.whl", hash = "sha256:8eff9dc4e6e844baf65beb16eb2c68a173ccd50dc9323dc04d85060cacc36a05"},
-    {file = "botocore_stubs-1.35.29.tar.gz", hash = "sha256:40d4cf5fc527fbad381be18cf837400d6f168a880e26ee794c8c04fa0a3e62c5"},
+    {file = "botocore_stubs-1.35.34-py3-none-any.whl", hash = "sha256:a01e38db54b228c9c990002d7f59e65e8a135990d1fc6720141a59e976b7eab2"},
+    {file = "botocore_stubs-1.35.34.tar.gz", hash = "sha256:7818c4adcc416943491a4ac48c615642c9083edbdaf981e102289926bc394cfa"},
 ]
 
 [package.dependencies]
@@ -1372,13 +1372,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.35.22"
-description = "Type annotations for boto3.S3 1.35.22 service generated with mypy-boto3-builder 8.1.1"
+version = "1.35.32"
+description = "Type annotations for boto3.S3 1.35.32 service generated with mypy-boto3-builder 8.1.2"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_s3-1.35.22-py3-none-any.whl", hash = "sha256:5b5aec56e16ef48766ae81b1807263127eebc4e6bfbeeef3f2f2cb7c30c06d03"},
-    {file = "mypy_boto3_s3-1.35.22.tar.gz", hash = "sha256:9f64e1196ffecc2c6ab7bee95e848692b5f464a1df14211361ea6bbbc2038387"},
+    {file = "mypy_boto3_s3-1.35.32-py3-none-any.whl", hash = "sha256:ad77a637c71295a693c616d0dcfadca9ee0a5426083fe40a4eb19e84453dd9fa"},
+    {file = "mypy_boto3_s3-1.35.32.tar.gz", hash = "sha256:fceeb10ea70991a516b34d11c1fde0f7f3fe7508df4e436ffe066d27d04db0e4"},
 ]
 
 [package.dependencies]
@@ -1557,8 +1557,8 @@ annotated-types = ">=0.6.0"
 email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.23.4"
 typing-extensions = [
-    {version = ">=4.12.2", markers = "python_version >= \"3.13\""},
     {version = ">=4.6.1", markers = "python_version < \"3.13\""},
+    {version = ">=4.12.2", markers = "python_version >= \"3.13\""},
 ]
 
 [package.extras]
@@ -2150,24 +2150,24 @@ test = ["pytest", "tornado (>=4.5)", "typeguard"]
 
 [[package]]
 name = "tomli"
-version = "2.0.1"
+version = "2.0.2"
 description = "A lil' TOML parser"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
-    {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
+    {file = "tomli-2.0.2-py3-none-any.whl", hash = "sha256:2ebe24485c53d303f690b0ec092806a085f07af5a5aa1464f3931eec36caaa38"},
+    {file = "tomli-2.0.2.tar.gz", hash = "sha256:d46d457a85337051c36524bc5349dd91b1877838e2979ac5ced3e710ed8a60ed"},
 ]
 
 [[package]]
 name = "types-awscrt"
-version = "0.21.5"
+version = "0.22.0"
 description = "Type annotations and code completion for awscrt"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_awscrt-0.21.5-py3-none-any.whl", hash = "sha256:117ff2b1bb657f09d01b7e0ce3fe3fa6e039be12d30b826896182725c9ce85b1"},
-    {file = "types_awscrt-0.21.5.tar.gz", hash = "sha256:9f7f47de68799cb2bcb9e486f48d77b9f58962b92fba43cb8860da70b3c57d1b"},
+    {file = "types_awscrt-0.22.0-py3-none-any.whl", hash = "sha256:b2c196bbd3226bab42d80fae13c34548de9ddc195f5a366d79c15d18e5897aa9"},
+    {file = "types_awscrt-0.22.0.tar.gz", hash = "sha256:67a660c90bad360c339f6a79310cc17094d12472042c7ca5a41450aaf5fc9a54"},
 ]
 
 [[package]]
