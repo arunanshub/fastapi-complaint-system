@@ -20,13 +20,13 @@ docs = ["sphinx (==7.2.6)", "sphinx-mdinclude (==0.5.3)"]
 
 [[package]]
 name = "alembic"
-version = "1.13.3"
+version = "1.14.0"
 description = "A database migration tool for SQLAlchemy."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "alembic-1.13.3-py3-none-any.whl", hash = "sha256:908e905976d15235fae59c9ac42c4c5b75cfcefe3d27c0fbf7ae15a37715d80e"},
-    {file = "alembic-1.13.3.tar.gz", hash = "sha256:203503117415561e203aa14541740643a611f641517f0209fcae63e9fa09f1a2"},
+    {file = "alembic-1.14.0-py3-none-any.whl", hash = "sha256:99bd884ca390466db5e27ffccff1d179ec5c05c965cfefc0607e69f9e411cb25"},
+    {file = "alembic-1.14.0.tar.gz", hash = "sha256:b00892b53b3642d0b8dbedba234dbf1924b69be83a9a769d5a624b01094e304b"},
 ]
 
 [package.dependencies]
@@ -709,8 +709,8 @@ files = [
 jmespath = ">=0.7.1,<2.0.0"
 python-dateutil = ">=2.1,<3.0.0"
 urllib3 = [
-    {version = ">=1.25.4,<1.27", markers = "python_version < \"3.10\""},
     {version = ">=1.25.4,<2.2.0 || >2.2.0,<3", markers = "python_version >= \"3.10\""},
+    {version = ">=1.25.4,<1.27", markers = "python_version < \"3.10\""},
 ]
 
 [package.extras]
@@ -1592,8 +1592,8 @@ annotated-types = ">=0.6.0"
 email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.23.4"
 typing-extensions = [
-    {version = ">=4.6.1", markers = "python_version < \"3.13\""},
     {version = ">=4.12.2", markers = "python_version >= \"3.13\""},
+    {version = ">=4.6.1", markers = "python_version < \"3.13\""},
 ]
 
 [package.extras]
