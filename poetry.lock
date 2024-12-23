@@ -244,19 +244,19 @@ test = ["distro (>=1.9.0,<1.10.0)", "flake8 (>=6.1,<7.0)", "flake8-pyi (>=24.1.0
 
 [[package]]
 name = "attrs"
-version = "24.2.0"
+version = "24.3.0"
 description = "Classes Without Boilerplate"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "attrs-24.2.0-py3-none-any.whl", hash = "sha256:81921eb96de3191c8258c199618104dd27ac608d9366f5e35d011eae1867ede2"},
-    {file = "attrs-24.2.0.tar.gz", hash = "sha256:5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"},
+    {file = "attrs-24.3.0-py3-none-any.whl", hash = "sha256:ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308"},
+    {file = "attrs-24.3.0.tar.gz", hash = "sha256:8f5c07333d543103541ba7be0e2ce16eeee8130cb0b3f9238ab904ce1e85baff"},
 ]
 
 [package.extras]
 benchmark = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-codspeed", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 cov = ["cloudpickle", "coverage[toml] (>=5.3)", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
-dev = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
+dev = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pre-commit-uv", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 docs = ["cogapp", "furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier (<24.7)"]
 tests = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
@@ -733,13 +733,13 @@ crt = ["awscrt (==0.22.0)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.35.76"
+version = "1.35.86"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore_stubs-1.35.76-py3-none-any.whl", hash = "sha256:617508d023e0bc98901e0189b794c4b3f289c1747c7cc410173ad698c819a716"},
-    {file = "botocore_stubs-1.35.76.tar.gz", hash = "sha256:c977a049481d50a14bf2db0ef15020b76734ff628d4b8e0e77b8d1c65318369e"},
+    {file = "botocore_stubs-1.35.86-py3-none-any.whl", hash = "sha256:f8d305ab92f730c1d01ad1f56db084b5e2e5943895255df458ca4ba11250d576"},
+    {file = "botocore_stubs-1.35.86.tar.gz", hash = "sha256:db69e737707664e6756167fe93afe8a14c9f59b0db4882e0ee68a92096710405"},
 ]
 
 [package.dependencies]
@@ -750,13 +750,13 @@ botocore = ["botocore"]
 
 [[package]]
 name = "certifi"
-version = "2024.8.30"
+version = "2024.12.14"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "certifi-2024.8.30-py3-none-any.whl", hash = "sha256:922820b53db7a7257ffbda3f597266d435245903d80737e34f8a45ff3e3230d8"},
-    {file = "certifi-2024.8.30.tar.gz", hash = "sha256:bec941d2aa8195e248a60b31ff9f0558284cf01a52591ceda73ea9afffd69fd9"},
+    {file = "certifi-2024.12.14-py3-none-any.whl", hash = "sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56"},
+    {file = "certifi-2024.12.14.tar.gz", hash = "sha256:b650d30f370c2b724812bee08008be0c4163b163ddaec3f2546c1caf65f191db"},
 ]
 
 [[package]]
@@ -954,13 +954,13 @@ files = [
 
 [[package]]
 name = "click"
-version = "8.1.7"
+version = "8.1.8"
 description = "Composable command line interface toolkit"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
-    {file = "click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"},
+    {file = "click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2"},
+    {file = "click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"},
 ]
 
 [package.dependencies]
@@ -1426,13 +1426,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.35.76"
-description = "Type annotations for boto3 S3 1.35.76 service generated with mypy-boto3-builder 8.6.0"
+version = "1.35.81"
+description = "Type annotations for boto3 S3 1.35.81 service generated with mypy-boto3-builder 8.6.4"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_s3-1.35.76-py3-none-any.whl", hash = "sha256:35f9ae109c3cb64ac6b44596dffc429058085ddb82f4daaf5be0a39e5cc1b576"},
-    {file = "mypy_boto3_s3-1.35.76.tar.gz", hash = "sha256:6cf1f034985fe610754c3e6ef287490629870d508ada13b7d61e7b9aaeb46108"},
+    {file = "mypy_boto3_s3-1.35.81-py3-none-any.whl", hash = "sha256:6af1d815ff2cc8e32ca1190c7387f94341c1607444f958ac283aa10b1d11db08"},
+    {file = "mypy_boto3_s3-1.35.81.tar.gz", hash = "sha256:fe1a6860c0ca7016e24089819433c0d5835d4a57635bb42628645b71271b946c"},
 ]
 
 [package.dependencies]
@@ -2256,24 +2256,24 @@ files = [
 
 [[package]]
 name = "types-awscrt"
-version = "0.23.3"
+version = "0.23.6"
 description = "Type annotations and code completion for awscrt"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_awscrt-0.23.3-py3-none-any.whl", hash = "sha256:cc0057885cb7ce1e66856123a4c2861b051e9f0716b1767ad72bfe4ca26bbcd4"},
-    {file = "types_awscrt-0.23.3.tar.gz", hash = "sha256:043c0ae0fe5d272618294cbeaf1c349a654a9f7c00121be64d27486933ac4a26"},
+    {file = "types_awscrt-0.23.6-py3-none-any.whl", hash = "sha256:fbf9c221af5607b24bf17f8431217ce8b9a27917139edbc984891eb63fd5a593"},
+    {file = "types_awscrt-0.23.6.tar.gz", hash = "sha256:405bce8c281f9e7c6c92a229225cc0bf10d30729a6a601123213389bd524b8b1"},
 ]
 
 [[package]]
 name = "types-passlib"
-version = "1.7.7.20240819"
+version = "1.7.7.20241221"
 description = "Typing stubs for passlib"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types-passlib-1.7.7.20240819.tar.gz", hash = "sha256:8fc8df71623845032293d5cf7f8091f0adfeba02d387a2888684b8413f14b3d0"},
-    {file = "types_passlib-1.7.7.20240819-py3-none-any.whl", hash = "sha256:c4d299083497b66e12258c7b77c08952574213fdf7009da3135d8181a6a25f23"},
+    {file = "types_passlib-1.7.7.20241221-py3-none-any.whl", hash = "sha256:2376ac4e4b6c179205e987c28d77df9cceba1ebb1f79cfa23623a9cc581dde07"},
+    {file = "types_passlib-1.7.7.20241221.tar.gz", hash = "sha256:c7e7d2d836aef2ef26a650110fc89cff896163767aebd8f5d6d5b2675e460173"},
 ]
 
 [[package]]
@@ -2303,13 +2303,13 @@ files = [
 
 [[package]]
 name = "types-simplejson"
-version = "3.19.0.20240801"
+version = "3.19.0.20241221"
 description = "Typing stubs for simplejson"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types-simplejson-3.19.0.20240801.tar.gz", hash = "sha256:ef90cc81dd915f26c452fa2b5e0cbd3a36af81074ae63878fcf8a477e7594e4d"},
-    {file = "types_simplejson-3.19.0.20240801-py3-none-any.whl", hash = "sha256:37f1b33c8626d7f072ea87737629310674845d54d187f12387fe33d31c938288"},
+    {file = "types_simplejson-3.19.0.20241221-py3-none-any.whl", hash = "sha256:179dfaef8c357156c781fa47cfdfcd953a7953fc375dfe9ab19a20054a828980"},
+    {file = "types_simplejson-3.19.0.20241221.tar.gz", hash = "sha256:114af9db0f49ad15755d2b6ad8e6fd04b5a493815e2fc1e011729d4650defc70"},
 ]
 
 [[package]]
