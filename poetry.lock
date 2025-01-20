@@ -731,13 +731,13 @@ crt = ["awscrt (==0.23.4)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.35.97"
+version = "1.36.2"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore_stubs-1.35.97-py3-none-any.whl", hash = "sha256:5427684c2248ad3db66c83b96e2486ebbacf13d7ba648a5acad7f422a086c419"},
-    {file = "botocore_stubs-1.35.97.tar.gz", hash = "sha256:aae08ea4a2aa3c360cfd783f8e4c713db64351b429baee148820d5b0a6d9221a"},
+    {file = "botocore_stubs-1.36.2-py3-none-any.whl", hash = "sha256:491c4a6142744be72320d5322e128b966551ddb288b1b3a913ccf26779d652c9"},
+    {file = "botocore_stubs-1.36.2.tar.gz", hash = "sha256:c9609ec184bd445121ab5529642bf773d420cdc7247f2d07a80821afe9a3f670"},
 ]
 
 [package.dependencies]
@@ -1906,20 +1906,20 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "s3transfer"
-version = "0.11.0"
+version = "0.11.1"
 description = "An Amazon S3 Transfer Manager"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "s3transfer-0.11.0-py3-none-any.whl", hash = "sha256:f43b03931c198743569bbfb6a328a53f4b2b4ec723cd7c01fab68e3119db3f8b"},
-    {file = "s3transfer-0.11.0.tar.gz", hash = "sha256:6563eda054c33bdebef7cbf309488634651c47270d828e594d151cd289fb7cf7"},
+    {file = "s3transfer-0.11.1-py3-none-any.whl", hash = "sha256:8fa0aa48177be1f3425176dfe1ab85dcd3d962df603c3dbfc585e6bf857ef0ff"},
+    {file = "s3transfer-0.11.1.tar.gz", hash = "sha256:3f25c900a367c8b7f7d8f9c34edc87e300bde424f779dc9f0a8ae4f9df9264f6"},
 ]
 
 [package.dependencies]
-botocore = ">=1.33.2,<2.0a.0"
+botocore = ">=1.36.0,<2.0a.0"
 
 [package.extras]
-crt = ["botocore[crt] (>=1.33.2,<2.0a.0)"]
+crt = ["botocore[crt] (>=1.36.0,<2.0a.0)"]
 
 [[package]]
 name = "simplejson"
@@ -2284,13 +2284,13 @@ types-urllib3 = "*"
 
 [[package]]
 name = "types-s3transfer"
-version = "0.10.4"
+version = "0.11.1"
 description = "Type annotations and code completion for s3transfer"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_s3transfer-0.10.4-py3-none-any.whl", hash = "sha256:22ac1aabc98f9d7f2928eb3fb4d5c02bf7435687f0913345a97dd3b84d0c217d"},
-    {file = "types_s3transfer-0.10.4.tar.gz", hash = "sha256:03123477e3064c81efe712bf9d372c7c72f2790711431f9baa59cf96ea607267"},
+    {file = "types_s3transfer-0.11.1-py3-none-any.whl", hash = "sha256:ddb20d103361c2d7cf95e9e73468cdd12f049f503b1512e6fdfe5a66fa086d2d"},
+    {file = "types_s3transfer-0.11.1.tar.gz", hash = "sha256:6ab89d4d76bcbf6d494582949963b4672347e8daa397d9790f3684b4fcf873c4"},
 ]
 
 [[package]]
