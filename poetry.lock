@@ -731,13 +731,13 @@ crt = ["awscrt (==0.23.8)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.36.16"
+version = "1.36.21"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "botocore_stubs-1.36.16-py3-none-any.whl", hash = "sha256:0d888f16b29adec2648d1e0c0d2b5efcda4520d228a5fa038f62d408e03a2502"},
-    {file = "botocore_stubs-1.36.16.tar.gz", hash = "sha256:acb480ba8e46950d6760b8bf2f38f7e73c135bd8339c0b7d9f2b5c631d3caf17"},
+    {file = "botocore_stubs-1.36.21-py3-none-any.whl", hash = "sha256:3dec608cde59eb9357139efa45d954cae692a1497645f7f132eeda0af13df25b"},
+    {file = "botocore_stubs-1.36.21.tar.gz", hash = "sha256:b49520a71c47bb56dfb4dafea751c40e0fefcd7070fef7ea7f0d54cc917d82aa"},
 ]
 
 [package.dependencies]
@@ -1417,13 +1417,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.36.15"
-description = "Type annotations for boto3 S3 1.36.15 service generated with mypy-boto3-builder 8.9.0"
+version = "1.36.21"
+description = "Type annotations for boto3 S3 1.36.21 service generated with mypy-boto3-builder 8.9.1"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_s3-1.36.15-py3-none-any.whl", hash = "sha256:a48031b4c84898756f03787baf711cf14cb219b5cb2e433a369c018544bfbffa"},
-    {file = "mypy_boto3_s3-1.36.15.tar.gz", hash = "sha256:e5400f6a008f746c42bbbe767eb492cec96a211ceb34b6032673aedcd87b3d62"},
+    {file = "mypy_boto3_s3-1.36.21-py3-none-any.whl", hash = "sha256:bfda17f51efafc2cdcefad7a13f5ac35bd721291476d8558c2d3a21758442be5"},
+    {file = "mypy_boto3_s3-1.36.21.tar.gz", hash = "sha256:9c6143c0dabfbd98e6c741e7cc65a33c7f87b8c28eeb373a2bc3e2c923af8283"},
 ]
 
 [package.dependencies]
@@ -2248,13 +2248,13 @@ files = [
 
 [[package]]
 name = "types-awscrt"
-version = "0.23.9"
+version = "0.23.10"
 description = "Type annotations and code completion for awscrt"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_awscrt-0.23.9-py3-none-any.whl", hash = "sha256:71181a6c5188352ae934e74a7633d80c82ac5c6f89054bd7d653bb1b5bba240b"},
-    {file = "types_awscrt-0.23.9.tar.gz", hash = "sha256:57ec68d45ef873458df7307ec80578a6334696f088549ab349c3d655e7e3562b"},
+    {file = "types_awscrt-0.23.10-py3-none-any.whl", hash = "sha256:7391bf502f6093221e68da8fb6a2af7ec67a98d376c58d5b76cc3938f449d121"},
+    {file = "types_awscrt-0.23.10.tar.gz", hash = "sha256:965659260599b421564204b895467684104a2c0311bbacfd3c2423b8b0d3f3e9"},
 ]
 
 [[package]]
