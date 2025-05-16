@@ -269,6 +269,7 @@ optional = false
 python-versions = ">=3.8"
 files = [
     {file = "boto3_stubs-1.38.17-py3-none-any.whl", hash = "sha256:04f0076b30218266178e9b99eb7156778f3a6242092064d545df7de88264fbd5"},
+    {file = "boto3_stubs-1.38.17.tar.gz", hash = "sha256:259fee3520b5d728193587cf3ab1619e7e12d2a4e9b4be7786d5d0de6672754b"},
 ]
 
 [package.dependencies]
