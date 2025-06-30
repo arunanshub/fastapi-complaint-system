@@ -1404,13 +1404,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.38.39"
-description = "Type annotations for boto3 S3 1.38.39 service generated with mypy-boto3-builder 8.11.0"
+version = "1.38.44"
+description = "Type annotations for boto3 S3 1.38.44 service generated with mypy-boto3-builder 8.11.0"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_s3-1.38.39-py3-none-any.whl", hash = "sha256:9b003a3d4f4e01c6f3a7dc01e6bdcf9cc58e74c48cfbccd7cf80328b5b3ef4c7"},
-    {file = "mypy_boto3_s3-1.38.39.tar.gz", hash = "sha256:b272d1c9b359017ea7c5d79b4610ba93e91f557ad01da0d6e302bd7b7804f73b"},
+    {file = "mypy_boto3_s3-1.38.44-py3-none-any.whl", hash = "sha256:9a9d305af1eebf246b6d6195bf88902ff553fe5aa0a78e5f517817875339f5e4"},
+    {file = "mypy_boto3_s3-1.38.44.tar.gz", hash = "sha256:eacf15c9164e56ecb86a76152adb414cf8f7f22b46cd80a843f6b7ef41a1cd8f"},
 ]
 
 [package.dependencies]
@@ -2242,13 +2242,13 @@ files = [
 
 [[package]]
 name = "types-awscrt"
-version = "0.27.2"
+version = "0.27.4"
 description = "Type annotations and code completion for awscrt"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_awscrt-0.27.2-py3-none-any.whl", hash = "sha256:49a045f25bbd5ad2865f314512afced933aed35ddbafc252e2268efa8a787e4e"},
-    {file = "types_awscrt-0.27.2.tar.gz", hash = "sha256:acd04f57119eb15626ab0ba9157fc24672421de56e7bd7b9f61681fedee44e91"},
+    {file = "types_awscrt-0.27.4-py3-none-any.whl", hash = "sha256:a8c4b9d9ae66d616755c322aba75ab9bd793c6fef448917e6de2e8b8cdf66fb4"},
+    {file = "types_awscrt-0.27.4.tar.gz", hash = "sha256:c019ba91a097e8a31d6948f6176ede1312963f41cdcacf82482ac877cbbcf390"},
 ]
 
 [[package]]
