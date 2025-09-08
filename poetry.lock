@@ -956,13 +956,13 @@ wmi = ["wmi (>=1.5.1)"]
 
 [[package]]
 name = "email-validator"
-version = "2.2.0"
+version = "2.3.0"
 description = "A robust email address syntax and deliverability validation library."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "email_validator-2.2.0-py3-none-any.whl", hash = "sha256:561977c2d73ce3611850a06fa56b414621e0c8faa9d66f2611407d87465da631"},
-    {file = "email_validator-2.2.0.tar.gz", hash = "sha256:cb690f344c617a714f22e66ae771445a1ceb46821152df8e165c5f9a364582b7"},
+    {file = "email_validator-2.3.0-py3-none-any.whl", hash = "sha256:80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4"},
+    {file = "email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426"},
 ]
 
 [package.dependencies]
@@ -1411,13 +1411,13 @@ typing-extensions = {version = "*", markers = "python_version < \"3.12\""}
 
 [[package]]
 name = "mypy-boto3-ses"
-version = "1.40.0"
-description = "Type annotations for boto3 SES 1.40.0 service generated with mypy-boto3-builder 8.11.0"
+version = "1.40.20"
+description = "Type annotations for boto3 SES 1.40.20 service generated with mypy-boto3-builder 8.11.0"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_ses-1.40.0-py3-none-any.whl", hash = "sha256:ba730594ae35e42acfc6836c2c34e1185871e9e4e79495fdf57958be4758fcc0"},
-    {file = "mypy_boto3_ses-1.40.0.tar.gz", hash = "sha256:abac11726aed03425bd5ad38226289174ac1305f9d23b0a09882fd499a36ec1d"},
+    {file = "mypy_boto3_ses-1.40.20-py3-none-any.whl", hash = "sha256:b95136a9d123f4864697ccbfc3ef7a415dddd4d3e9ac214b266054edb87391ce"},
+    {file = "mypy_boto3_ses-1.40.20.tar.gz", hash = "sha256:7261954c7436046a5e298ca65dfc4cad7f807ee1e4cba0d3370c4bd292b83445"},
 ]
 
 [package.dependencies]
@@ -2271,13 +2271,13 @@ types-urllib3 = "*"
 
 [[package]]
 name = "types-s3transfer"
-version = "0.13.0"
+version = "0.13.1"
 description = "Type annotations and code completion for s3transfer"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types_s3transfer-0.13.0-py3-none-any.whl", hash = "sha256:79c8375cbf48a64bff7654c02df1ec4b20d74f8c5672fc13e382f593ca5565b3"},
-    {file = "types_s3transfer-0.13.0.tar.gz", hash = "sha256:203dadcb9865c2f68fb44bc0440e1dc05b79197ba4a641c0976c26c9af75ef52"},
+    {file = "types_s3transfer-0.13.1-py3-none-any.whl", hash = "sha256:4ff730e464a3fd3785b5541f0f555c1bd02ad408cf82b6b7a95429f6b0d26b4a"},
+    {file = "types_s3transfer-0.13.1.tar.gz", hash = "sha256:ce488d79fdd7d3b9d39071939121eca814ec65de3aa36bdce1f9189c0a61cc80"},
 ]
 
 [[package]]
