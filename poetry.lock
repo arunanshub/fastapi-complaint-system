@@ -1436,13 +1436,13 @@ reports = ["lxml"]
 
 [[package]]
 name = "mypy-boto3-s3"
-version = "1.40.26"
-description = "Type annotations for boto3 S3 1.40.26 service generated with mypy-boto3-builder 8.11.0"
+version = "1.40.61"
+description = "Type annotations for boto3 S3 1.40.61 service generated with mypy-boto3-builder 8.11.0"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_s3-1.40.26-py3-none-any.whl", hash = "sha256:6d055d16ef89a0133ade92f6b4f09603e4acc31a0f5e8f846edf4eb48f17b5a7"},
-    {file = "mypy_boto3_s3-1.40.26.tar.gz", hash = "sha256:8d2bfd1052894d0e84c9fb9358d838ba0eed0265076c7dd7f45622c770275c99"},
+    {file = "mypy_boto3_s3-1.40.61-py3-none-any.whl", hash = "sha256:51666977f81b6f7a88fe22eaf041b755a2873d0225e481ad5241bb28e6f6bd47"},
+    {file = "mypy_boto3_s3-1.40.61.tar.gz", hash = "sha256:2655db143cae37fbc68b53aae34fbc5c904925d04b0f263ae7c38fb560b6a85f"},
 ]
 
 [package.dependencies]
@@ -1450,13 +1450,13 @@ typing-extensions = {version = "*", markers = "python_version < \"3.12\""}
 
 [[package]]
 name = "mypy-boto3-ses"
-version = "1.40.20"
-description = "Type annotations for boto3 SES 1.40.20 service generated with mypy-boto3-builder 8.11.0"
+version = "1.40.60"
+description = "Type annotations for boto3 SES 1.40.60 service generated with mypy-boto3-builder 8.11.0"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mypy_boto3_ses-1.40.20-py3-none-any.whl", hash = "sha256:b95136a9d123f4864697ccbfc3ef7a415dddd4d3e9ac214b266054edb87391ce"},
-    {file = "mypy_boto3_ses-1.40.20.tar.gz", hash = "sha256:7261954c7436046a5e298ca65dfc4cad7f807ee1e4cba0d3370c4bd292b83445"},
+    {file = "mypy_boto3_ses-1.40.60-py3-none-any.whl", hash = "sha256:26cf7bfcbb787a8a9281a10e83db47c62eb33ac40c33362b6c514d1eae811f05"},
+    {file = "mypy_boto3_ses-1.40.60.tar.gz", hash = "sha256:ab31a8937e9e29f93e5a6a359bb344615255f466b20a3a814f73fefa930af97a"},
 ]
 
 [package.dependencies]
