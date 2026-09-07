@@ -22,7 +22,7 @@ asyncpg = {version = "^0.30.0", optional = true}
 psycopg2-binary = {version = "^2.9.5", optional = true}
 boto3 = "^1.26.74"
 pyfa-converter = "^1.0.3.0"
-apiron = "^7.0.0"
+apiron = "^9.0.0"
 simplejson = "^3.18.3"
 tenacity = "^8.2.1"
 
